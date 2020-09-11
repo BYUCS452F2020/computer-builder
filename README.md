@@ -44,9 +44,11 @@ All in all the technicallity of programming languages is up for discussion these
 
 Our priorities will be:
 
-1. Research price and specs of computer components and categorize them into categories that users will be interested in. (cheap, fast, etc.)
-2. Choose the No-SQL database type that will fulfill the issue of large amounts of usage.
-3. Implement the MVP/More priorities to follow.
+1. Discuss and decide on back-end and front-end languages and frameworks.
+2. Research price and specs of computer components and categorize them into categories that users will be interested in. (cheap, fast, etc.)
+3. Confirm a choice for the SQL database, discuss needed information for entities, and begin construction. The idea so far is to have three tables (Users, Builds(Computer Build), and Components).
+4. Choose the No-SQL database type that will fulfill the issue of large amounts of usage (DynamoDB, MongoDB, etc.).
+5. Implement the MVP.
 
 ### Finishing Note
 
