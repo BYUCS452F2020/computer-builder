@@ -21,7 +21,7 @@ I am familiar with SQLite the most, but I am open to work with other suggestions
 
 ### No-SQL
 
-I haven't thought of which type of NoSQL database to lean towards, but I'm thinking we may need to lean toward a column family database, but that will also be up for suggestions.
+I haven't thought of which type of NoSQL database to lean towards. NoSQL databases I'm aware of are MongoDB and DynamoDB so either of those or other suggestions.
 
 ### Business
 
