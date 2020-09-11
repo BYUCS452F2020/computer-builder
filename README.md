@@ -48,6 +48,6 @@ Our priorities will be:
 2. Choose the No-SQL database type that will fulfill the issue of large amounts of usage.
 3. Implement the MVP/More priorities to follow.
 
-###Finishing Note
+### Finishing Note
 
 This project really is going to take a lot of working together to solve this, thus a lot of what I have provided is subject to change and it can be simplified more if this does become too complex. I may have expressed the idea, but those who want to join need to be ready to voice their opinions and you can add your own feedback.
