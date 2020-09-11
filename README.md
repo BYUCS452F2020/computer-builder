@@ -13,7 +13,7 @@ This will hopefully require only a little bit of research unless you are already
 
 ### Team
 
-I'm looking for one but maybe preferably two others to join the team just in case the research may be a little heavier. Again you don't need to be knowledgable in building PCs.
+I'm looking for one but preferably two others to join the team just in case the research may be a little heavier. Again you don't need to be knowledgable in building PCs.
 
 ### SQL
 
@@ -29,7 +29,7 @@ Our application will be a free application and if the product takes off since we
 
 ### Legal
 
-We will not be selling these products rather be assisting in users finding certain products, thus we will need to identify the manufacturers of products that we will present in this application.
+We will not be selling these products rather be assisting in users finding certain products, thus we would be identifying the manufacturers of products that we will present in this application and not brand them as our own.
 
 The business will be a Utah LLC!
 
@@ -46,8 +46,8 @@ Our priorities will be:
 
 1. Research price and specs of computer components and categorize them into categories that users will be interested in. (cheap, fast, etc.)
 2. Choose the No-SQL database type that will fulfill the issue of large amounts of usage.
-3. Implement the MVP.
+3. Implement the MVP/More priorities to follow.
 
 ###Finishing Note
 
-This project really is going to take a lot of working together to solve this, thus a lot of what I have provided is subject to change and it can be simplified more if this is too complex. I may have expressed the idea, but those who want to join need to be ready to voice their opinions.
+This project really is going to take a lot of working together to solve this, thus a lot of what I have provided is subject to change and it can be simplified more if this does become too complex. I may have expressed the idea, but those who want to join need to be ready to voice their opinions and you can add your own feedback.
