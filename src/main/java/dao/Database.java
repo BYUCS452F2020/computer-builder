@@ -42,6 +42,10 @@ public class Database {
         }
     }
 
+    public boolean isOpenConnection() {
+        return connection != null;
+    }
+
     /**
      * Allows for a data access object to close the connection to the database.
      * @param commit determines if the database should commit changes.
@@ -74,13 +78,12 @@ public class Database {
 
             String sql = "CREATE TABLE IF NOT EXISTS Users " +
                     "(" +
-                    "user_id text not null unique, " +
+                    "username text not null unique, " +
                     "first_name text not null, " +
                     "last_name text not null, " +
-                    "username text not null, " +
-                    "password int not null, " +
+                    "password bigint not null, " +
                     "email text not null, " +
-                    "primary key (user_id)" +
+                    "primary key (username)" +
                     ");" +
                     "CREATE TABLE IF NOT EXISTS Components " +
                     "(" +
@@ -89,9 +92,10 @@ public class Database {
                     "component_type text not null, " +
                     "manufacturer text not null, " +
                     "performance_rating int not null, " +
-                    "price int not null, " +
+                    "price bigint not null, " +
                     "cpu_family text, " +
-                    "tdp int, " +
+                    "tdp bigint, " +
+                    "image_url text, " +
                     "primary key (component_id)" +
                     ")";
 
