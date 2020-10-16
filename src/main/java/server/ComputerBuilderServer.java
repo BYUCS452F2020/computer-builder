@@ -12,10 +12,10 @@ public class ComputerBuilderServer {
         HttpServer server = HttpServer.create(serverAddress, 10);
         registerHandlers(server);
         server.start();
-        System.out.println("FamilyMapServer listening on port " + port);
+        System.out.println("ComputerBuilderServer listening on port " + port);
     }
     private void registerHandlers(HttpServer server) {
-        //server.createContext("/user/register", new Register_Request_Handler());
+        server.createContext("/user/register", new RegisterRequestHandler());
         server.createContext("/user/login", new LoginRequestHandler());
     }
 }

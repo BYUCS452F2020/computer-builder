@@ -43,7 +43,7 @@ export default {
   methods: {
     async saveBuild() {
       try {
-        this.error = await this.$sto
+        this.error = await this.$store.dispatch()
         const formData = new FormData();
         formData.append('userID', this.$store.user.username);
         if (!this.error) {

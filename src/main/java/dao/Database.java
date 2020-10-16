@@ -9,7 +9,7 @@ import java.sql.Statement;
  * Database class performs the connection between the data access objects and the database.
  */
 public class Database {
-    private static Database instance;
+    private static Database instance = null;
     Connection connection;
 
     public static Database getInstance() {
@@ -18,6 +18,13 @@ public class Database {
         }
 
         return instance;
+    }
+
+    public void Database() throws DataAccessException
+    {
+        openConnection();
+        createTables();
+        closeConnection(false);
     }
 
     /**

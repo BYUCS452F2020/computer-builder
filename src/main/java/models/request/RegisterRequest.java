@@ -1,22 +1,33 @@
 package models.request;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Contains all the fields necessary for a successful user registration. All variables are required.
  */
 public class RegisterRequest {
-    public RegisterRequest(String username, String password, String email, String firstName, String lastName) {
+    @SerializedName("username")
+    public String username;
+    @SerializedName("password")
+    public String password;
+    @SerializedName("email")
+    public String email;
+    @SerializedName("firstName")
+    public String firstName;
+    @SerializedName("lastName")
+    public String lastName;
+
+    public RegisterRequest(){};
+
+    /*public RegisterRequest(String username, String password, String firstName, String lastName, String email) {
         this.username = username;
         this.password = password;
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
-    }
+    }*/
 
-    String username;
-    String password;
-    String email;
-    String firstName;
-    String lastName;
+
 
     public String getUsername() {
         return username;

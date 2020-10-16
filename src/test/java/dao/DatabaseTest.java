@@ -13,12 +13,12 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 public class DatabaseTest {
 
-    private Database databaseToTest = null;
+    private Database databaseToTest;
     private Connection connection = null;
 
     @BeforeEach
     public void setUp() {
-        databaseToTest = new Database();
+        databaseToTest = Database.getInstance();
     }
 
     @AfterEach

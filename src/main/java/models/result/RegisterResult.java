@@ -7,16 +7,16 @@ package models.result;
 public class RegisterResult {
 
     public RegisterResult(String userName) {
-        this.userName = userName;
+        this.username = userName;
     }
 
-    String userName;
+    String username;
 
     public String getUserName() {
-        return userName;
+        return username;
     }
 
     public void setUserName(String userName) {
-        this.userName = userName;
+        this.username = userName;
     }
 }

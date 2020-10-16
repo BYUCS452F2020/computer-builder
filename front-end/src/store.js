@@ -1,9 +1,10 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import axios from 'axios'
 
 Vue.use(Vuex)
 
-const store = new Vuex.Store({
+export default new Vuex.Store({
   state: {
     user: null,
     builds: [],
@@ -13,7 +14,6 @@ const store = new Vuex.Store({
     rams: [],
     storages: [],
     psus: [],
-    cpus: [],
     coolers: [],
     cases: [],
     cpuChosen: false,
@@ -32,7 +32,8 @@ const store = new Vuex.Store({
   },
   mutations: {
     setUser(state, user) {
-        state.user = user;
+        console.log("user is: " + user.username)
+        state.user = user.username;
     },
     setBuilds(state, builds) {
         state.builds = builds;
@@ -85,34 +86,37 @@ const store = new Vuex.Store({
     changeCases(state, cases) {
         state.currentBuild.cases = cases;
     },
-    toggleCPU() {
-      if (cpuChosen == true)
-        cpuChosen = false;
+    toggleCPU(state) {
+      if (state.cpuChosen == true)
+        state.cpuChosen = false;
       else
-        cpuChosen = true;
+        state.cpuChosen = true;
     },
-    toggleMotherboard() {
-      if (motherboardChosen == true)
-        motherboardChosen = false;
+    toggleMotherboard(state) {
+      if (state.motherboardChosen == true)
+        state.motherboardChosen = false;
       else
-        motherboardChosen = true;
+        state.motherboardChosen = true;
     },
-    setPSUReq(num) {
+    setPSUReq(state, num) {
       if (num == 0) {
-        totalPSUReq = 0;
+        state.totalPSUReq = 0;
       }
       else {
-        totalPSUReq = totalPSUReq + num;
+        state.totalPSUReq = state.totalPSUReq + num;
       }
     }
   },
     actions: {
     async register(context, data) {
       try {
-        let response = await axios.post("/api/users", data);
+        console.log("registering!")
+        let response = await axios.post("http://localhost:8081/user/register", data);
         context.commit('setUser', response.data);
+        //console.log("user is " + context.state.user);
         return "";
       } catch (error) {
+        //console.log(error.response.data.message);
         return error.response.data.message;
       }
     },
@@ -161,7 +165,7 @@ const store = new Vuex.Store({
       }
     },
     async getCPUs(context) {
-      if (!motherboardChosen){
+      if (!context.state.motherboardChosen){
         try {
           let response = await axios.get("/api/cpus");
           context.commit('setCPUs', response.data);
@@ -170,12 +174,12 @@ const store = new Vuex.Store({
           return "";
         }
       }
-      if (motherboardChosen){
+      if (context.state.motherboardChosen){
         //get it but with mobo constraints
       }
     },
     async getMotherboards(context) {
-      if (!cpuChosen){
+      if (!context.state.cpuChosen){
         try {
           let response = await axios.get("/api/motherboards");
           context.commit('setMotherboards', response.data);
@@ -184,7 +188,7 @@ const store = new Vuex.Store({
           return "";
         }
       }
-      if (cpuChosen){
+      if (context.state.cpuChosen){
         //get it but with mobo constraints
       }
     },

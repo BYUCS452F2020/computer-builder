@@ -2,7 +2,7 @@
     <div>
         <div id="cpu">
             <h1>User Page</h1>
-            <span v-if="loggedOut">
+            <span v-if="loggedOut & !registering">
                 <h3>Looks like you're not logged in</h3>
                 <span id="sign-in_form">
                     <span id="sign-in_fields">
@@ -15,7 +15,16 @@
                     </span>
                 </span>
             </span>
-            <span v-if="!loggedOut">
+            <span v-if="registering">
+                <input v-model="username" placeholder="Username">
+                <input v-model="password" placeholder="Password">
+                <input v-model="firstName" placeholder="First Name">
+                <input v-model="lastName" placeholder="Last Name">
+                <input v-model="email" placeholder="Email">
+                <button class="register_button" v-on:click="registerDatabase()">Register</button>
+
+            </span>
+            <span v-if="!loggedOut" & !registering>
                 This is where a list of your builds will be once we have this linked with the backend
                 <button class="log-out_button" v-on:click="logOut()">Log Out</button>
             </span>
@@ -44,7 +53,11 @@ export default {
         return {
             username: "",
             password: "",
-            loggedOut: true
+            firstName: "",
+            lastName: "",
+            email: "",
+            loggedOut: true,
+            registering: false
         }
     },
     methods: {
@@ -52,7 +65,7 @@ export default {
             this.loggedOut = false
         },
         register() {
-            this.loggedOut = false
+            this.registering = true
         },
         logOut() {
             this.loggedOut = true
@@ -60,12 +73,14 @@ export default {
         async registerDatabase() {
             try {
                 this.error = await this.$store.dispatch("register", {
-                    name: this.name,
                     username: this.username,
-                    password: this.password
+                    password: this.password,
+                    firstName: this.firstName,
+                    lastName: this.lastName,
+                    email: this.email
                 });
                 if (this.error === "")
-                    this.$router.push('mypage');
+                    this.$router.push('user');
             } catch (error) {
                 console.log(error);
             }
@@ -77,7 +92,7 @@ export default {
                 password: this.password
             });
             if (this.error === "")
-                this.$router.push('mypage');
+                this.$router.push('user');
             } catch (error) {
                 console.log(error);
             }
