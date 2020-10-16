@@ -9,8 +9,16 @@ import java.sql.Statement;
  * Database class performs the connection between the data access objects and the database.
  */
 public class Database {
-
+    private static Database instance;
     Connection connection;
+
+    public static Database getInstance() {
+        if(instance == null) {
+            instance = new Database();
+        }
+
+        return instance;
+    }
 
     /**
      * Opens a connection to a sqlite database.
