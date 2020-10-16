@@ -15,4 +15,4 @@ Technical: Backend with Java and frontend being web sounds good.
 P.S.
 An idea for group composition. Frontend coder, backend coder (connecting to database and stuff), and middle man coder (help connect the two)
 
-Git test
+Git test 2
