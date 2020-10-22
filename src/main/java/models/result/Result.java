@@ -1,5 +1,9 @@
 package models.result;
 
+/**
+ * The outcome from accessing a database
+ */
+
 public class Result {
     public final boolean success;
     public final String message;

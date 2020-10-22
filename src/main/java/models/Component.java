@@ -9,13 +9,13 @@ public class Component {
     private String componentType;
     private String manufacturer;
     private int performanceRating;
-    private int price;
+    private double price;
     private String cpuFamily;
     private int tpd;
     private String imageURL;
 
     public Component(String componentID, String componentName, String componentType, String manufacturer,
-                     int performanceRating, int priceRating, String cpuFamily, int tpd) {
+                     int performanceRating, double priceRating, String cpuFamily, int tpd) {
         this.componentID = componentID;
         this.componentName = componentName;
         this.componentType = componentType;
@@ -67,11 +67,11 @@ public class Component {
         this.performanceRating = performanceRating;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 

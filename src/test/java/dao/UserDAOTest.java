@@ -5,6 +5,10 @@ import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/*
+    The Database has been populated so do not run any tests at this time.
+ */
+
 public class UserDAOTest {
 
     private User testUser;

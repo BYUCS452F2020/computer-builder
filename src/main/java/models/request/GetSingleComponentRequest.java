@@ -1,5 +1,9 @@
 package models.request;
 
+/**
+ * A request for a certain component based off id
+ */
+
 public class GetSingleComponentRequest {
     private String componentId;
 

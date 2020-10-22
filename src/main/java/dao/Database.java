@@ -92,7 +92,7 @@ public class Database {
                     "component_type text not null, " +
                     "manufacturer text not null, " +
                     "performance_rating int not null, " +
-                    "price bigint not null, " +
+                    "price decimal(10,2) not null, " +
                     "cpu_family text, " +
                     "tdp bigint, " +
                     "image_url text, " +

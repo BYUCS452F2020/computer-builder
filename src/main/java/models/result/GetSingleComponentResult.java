@@ -2,6 +2,10 @@ package models.result;
 
 import models.Component;
 
+/**
+ * A result that has a single component
+ */
+
 public class GetSingleComponentResult extends Result {
 
     private Component component;

@@ -1,5 +1,8 @@
 package models.request;
 
+/**
+ * A request to retrieve a list of components of a certain type possibly based off certain conditions
+ */
 public class GetComponentsRequest {
     private String componentType;
     private int budgetPrice;

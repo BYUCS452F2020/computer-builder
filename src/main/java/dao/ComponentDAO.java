@@ -26,7 +26,7 @@ public class ComponentDAO {
             stmt.setString(3, component.getComponentType());
             stmt.setString(4, component.getManufacturer());
             stmt.setInt(5, component.getPerformanceRating());
-            stmt.setInt(6, component.getPrice());
+            stmt.setDouble(6, component.getPrice());
             stmt.setString(7, component.getCpuFamily());
             stmt.setInt(8, component.getTpd());
 
@@ -49,7 +49,7 @@ public class ComponentDAO {
                 component = new Component(rs.getString("component_id"),
                         rs.getString("component_name"), rs.getString("component_type"),
                         rs.getString("manufacturer"), rs.getInt("performance_rating"),
-                        rs.getInt("price"), rs.getString("cpu_family),"),
+                        rs.getDouble("price"), rs.getString("cpu_family"),
                         rs.getInt("tdp"));
                 return component;
             }
@@ -74,6 +74,7 @@ public class ComponentDAO {
         boolean isPriced = false;
         boolean isPerformance = false;
         boolean isCPUFamily = false;
+        int index = 1;
         ResultSet rs = null;
         String sql = "SELECT * FROM Components WHERE component_type = ?";
         if (maxPrice != 0) {
@@ -89,22 +90,25 @@ public class ComponentDAO {
             sql += " AND cpu_family = ?";
         }
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setString(1, componentType);
+            stmt.setString(index, componentType);
             if(isPriced) {
-                stmt.setInt(2, maxPrice);
+                index += 1;
+                stmt.setInt(index, maxPrice);
             }
             if(isPerformance) {
-                stmt.setInt(3, performanceRating);
+                index += 1;
+                stmt.setInt(index, performanceRating);
             }
             if(isCPUFamily) {
-                stmt.setString(4, cpuFamily);
+                index += 1;
+                stmt.setString(index, cpuFamily);
             }
             rs = stmt.executeQuery();
             while(rs.next()) {
                 components.add(new Component(rs.getString("component_id"),
                         rs.getString("component_name"), rs.getString("component_type"),
                         rs.getString("manufacturer"), rs.getInt("performance_rating"),
-                        rs.getInt("price"), rs.getString("cpu_family),"),
+                        rs.getDouble("price"), rs.getString("cpu_family"),
                         rs.getInt("tdp")));
             }
             return components;
@@ -137,7 +141,7 @@ public class ComponentDAO {
 
     public int deleteOne(String componentID) throws DataAccessException {
         int count;
-        String sql = "DELETE FROM Components WHERE component = ?";
+        String sql = "DELETE FROM Components WHERE component_id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, componentID);
             count = stmt.executeUpdate();

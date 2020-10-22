@@ -4,6 +4,10 @@ import models.Component;
 
 import java.util.List;
 
+/**
+ * A result that has a list of components of a certain type and condition
+ */
+
 public class GetComponentsResult extends Result {
     private List<Component> componentList;
 
