@@ -4,8 +4,8 @@
             <button class="component_label" v-on:click="toggleVisible()">MOBOS</button>
             <span v-if="show">
                 <ul>
-                    <li v-for="mobo in theMOBOS" :key="mobo.name">
-                        {{mobo.name}}: ${{mobo.price}}
+                    <li v-for="motherboard in this.$store.motherboards" :key="motherboard.name">
+                        {{motherboard.name}}: ${{motherboard.price}}
                     </li>
                 </ul>
             </span>
@@ -15,7 +15,7 @@
 
 <script>
 export default {
-    name: "CPUs",
+    name: "motherboards",
     data() {
         return {
             theMOBOS: [{

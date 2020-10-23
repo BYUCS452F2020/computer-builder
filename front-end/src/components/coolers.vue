@@ -4,7 +4,7 @@
             <button class="component_label" v-on:click="toggleVisible()">Coolers</button>
             <span v-if="show">
                 <ul>
-                    <li v-for="cooler in theCoolers" :key="cooler.name">
+                    <li v-for="cooler in this.$store.coolers" :key="cooler.name">
                         {{cooler.name}}: ${{cooler.price}}
                     </li>
                 </ul>

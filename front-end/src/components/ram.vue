@@ -4,7 +4,7 @@
             <button class="component_label" v-on:click="toggleVisible()">RAMS</button>
             <span v-if="show">
                 <ul>
-                    <li v-for="ram in theRAMS" :key="ram.name">
+                    <li v-for="ram in this.$store.rams" :key="ram.name">
                         {{ram.name}}: ${{ram.price}}
                     </li>
                 </ul>

@@ -6,6 +6,7 @@
                 <ul>
                     <li v-for="cpu in this.$store.cpus" :key="cpu.name">
                         {{cpu.name}}: ${{cpu.price}}
+                        <button @click="addToBuild(cpu)">Add to build</button>
                     </li>
                 </ul>
             </span>
@@ -32,8 +33,8 @@ export default {
         }
     },
     async created() {
-    await this.$store.dispatch("getCPUs");
-  },
+        this.getCPUs();
+    },
     methods: {
         toggleVisible() {
             if (this.show == true) {
@@ -43,8 +44,26 @@ export default {
                 this.show = true
             }
         },
-        addToBuild() {
-            
+        addToBuild(cpu) {
+            this.$store.commit({
+                type: "changeCPU",
+                amount: cpu
+            });
+            this.$store.commit("toggleCPU")
+        },
+        async getCPUs () {
+            try {
+                this.error = await this.$store.dispatch("getCPUs", {
+                componentType: "CPU",
+                maxPrice: this.$store.maxPrice,
+                performanceRating: this.$store.performanceRating,
+                cpuFamily: this.$store.cpuFamily
+                });
+            if (this.error === "")
+                console.log("success! got cpus")
+            } catch (error) {
+                console.log(error);
+            }
         }
     }
 }

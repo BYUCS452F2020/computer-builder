@@ -4,7 +4,7 @@
             <button class="component_label" v-on:click="toggleVisible()">Cases</button>
             <span v-if="show">
                 <ul>
-                    <li v-for="casE in theCases" :key="casE.name">
+                    <li v-for="casE in this.$store.cases" :key="casE.name">
                         {{casE.name}}: ${{casE.price}}
                     </li>
                 </ul>

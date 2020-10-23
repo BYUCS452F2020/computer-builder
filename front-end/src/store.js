@@ -19,6 +19,9 @@ export default new Vuex.Store({
     cpuChosen: false,
     motherboardChosen: false,
     totalPSUReq: 0,
+    maxPrice: 10000,
+    performanceRating: 0,
+    cpuFamily: null,
     currentBuild: {
       cpu: null,
       motherboard: null,
@@ -63,6 +66,7 @@ export default new Vuex.Store({
         state.cases = cases;
     },
     changeCPU(state, cpu) {
+      console.log("changing cpu!")
         state.currentBuild.cpu = cpu;
     },
     changeMotherboard(state, mobo) {
@@ -91,6 +95,7 @@ export default new Vuex.Store({
         state.cpuChosen = false;
       else
         state.cpuChosen = true;
+      console.log("CPU is now " + state.cpuChosen)
     },
     toggleMotherboard(state) {
       if (state.motherboardChosen == true)
@@ -122,7 +127,8 @@ export default new Vuex.Store({
     },
     async login(context, data) {
       try {
-        let response = await axios.post("/api/users/login", data);
+        console.log(data)
+        let response = await axios.post("http://localhost:8081/user/login", data);
         context.commit('setUser', response.data);
         return "";
       } catch (error) {
@@ -164,10 +170,10 @@ export default new Vuex.Store({
         return error.response.data.message;
       }
     },
-    async getCPUs(context) {
+    async getCPUs(context, data) {
       if (!context.state.motherboardChosen){
         try {
-          let response = await axios.get("/api/cpus");
+          let response = await axios.get("http://localhost:8081/component", data);
           context.commit('setCPUs', response.data);
           return "";
         } catch (error) {

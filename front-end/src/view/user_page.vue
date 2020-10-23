@@ -10,7 +10,7 @@
                         <input v-model="password" placeholder="Password">
                     </span>
                     <span id="sign-in_buttons">
-                        <button class="sign-in_button" v-on:click="signIn()">Sign In</button>
+                        <button class="sign-in_button" v-on:click="loginDatabase()">Sign In</button>
                         <button class="register_button" v-on:click="register()">Register</button>
                     </span>
                 </span>
@@ -48,6 +48,9 @@ export default {
         builds() {
             return this.$store.state.builds;
         }
+    },
+    created() {
+        //TODO get all users builds
     },
     data() {
         return {

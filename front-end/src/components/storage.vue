@@ -4,7 +4,7 @@
             <button class="component_label" v-on:click="toggleVisible()">Storage</button>
             <span v-if="show">
                 <ul>
-                    <li v-for="storage in theStorages" :key="storage.name">
+                    <li v-for="storage in this.$store.storages" :key="storage.name">
                         {{storage.name}}: ${{storage.price}}
                     </li>
                 </ul>

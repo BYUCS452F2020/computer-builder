@@ -4,7 +4,7 @@
             <button class="component_label" v-on:click="toggleVisible()">PSUS</button>
             <span v-if="show">
                 <ul>
-                    <li v-for="psu in thePSUS" :key="psu.name">
+                    <li v-for="psu in this.$store.psus" :key="psu.name">
                         {{psu.name}}: ${{psu.price}}
                     </li>
                 </ul>

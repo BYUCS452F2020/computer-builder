@@ -4,7 +4,7 @@
             <button class="component_label" v-on:click="toggleVisible()">GPUS</button>
             <span v-if="show">
                 <ul>
-                    <li v-for="gpu in theGPUS" :key="gpu.name">
+                    <li v-for="gpu in this.$store.gpus" :key="gpu.name">
                         {{gpu.name}}: ${{gpu.price}}
                     </li>
                 </ul>

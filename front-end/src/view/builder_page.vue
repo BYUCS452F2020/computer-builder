@@ -40,9 +40,14 @@ export default {
   },
   props: {
   },
+  created() {
+        //TODO get all possible components
+        this.getAllComponents();
+  },
   methods: {
     async saveBuild() {
       try {
+        //TODO dispatch adding build
         this.error = await this.$store.dispatch()
         const formData = new FormData();
         formData.append('userID', this.$store.user.username);
@@ -52,6 +57,15 @@ export default {
           this.file = null;
           this.$emit('uploadFinished');
         }
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async getAllComponents() {
+      try {
+        this.error = await this.$store.dispatch("getAllComponents")
+        const formData = new FormData();
+        formData.append('')
       } catch (error) {
         console.log(error);
       }
