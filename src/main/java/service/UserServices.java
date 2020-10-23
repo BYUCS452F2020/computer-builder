@@ -2,7 +2,7 @@ package service;
 
 
 import dao.DataAccessException;
-import dao.Database;
+import dao.Database_different;
 import dao.UserDAO;
 import models.User;
 import models.request.*;
@@ -18,7 +18,7 @@ public class UserServices {
     public RegisterResult register(RegisterRequest r) throws DataAccessException
     {
         System.out.println(r.getUsername());
-        Database db = Database.getInstance();
+        Database_different db = Database_different.getInstance();
 
         Connection conn = db.openConnection();
         //System.out.println(conn.toString());
@@ -40,11 +40,11 @@ public class UserServices {
     public LoginResult login(LoginRequest r) throws DataAccessException
     {
         System.out.println(r.getUsername());
-        Database db = Database.getInstance();
+        Database_different db = Database_different.getInstance();
 
-        Connection conn = db.openConnection();
+         /*Connection conn = db.openConnection();
         //System.out.println(conn.toString());
-        /* INCOMPLETE, see TO-DO below
+        INCOMPLETE, see TO-DO below
         try {
             UserDAO userDao = new UserDAO(conn);
             //TODO Add find to UserDAO for login

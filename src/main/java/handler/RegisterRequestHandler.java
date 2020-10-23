@@ -34,26 +34,14 @@ public class RegisterRequestHandler implements HttpHandler {
                 System.out.println("headers sent");
             }
             else if (httpE.getRequestMethod().toUpperCase().equals("POST")) {
-                System.out.println("in the if");
-                //httpE.getResponseHeaders().add("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
-                //httpE.getResponseHeaders().add("Access-Control-Allow-Headers", "*");
-                //httpE.getResponseHeaders().add("Access-Control-Allow-Credentials", "true");
-                //httpE.getResponseHeaders().add("Access-Control-Allow-Credentials-Header", "*");
-
                 InputStream reqBody = httpE.getRequestBody();
                 InputStreamReader isr = new InputStreamReader(reqBody);
                 BufferedReader br = new BufferedReader(isr);
 
                 Gson gson = new Gson();
 
-
                 RegisterRequest regReq = gson.fromJson(br, RegisterRequest.class);
-                System.out.println("user in the handler is " + regReq.getUsername());
-                //TODO handle passwords with registration properly (when to hash and when to leave as string)
-                //RegisterRequest regReq = new RegisterRequest(user.getUsername(),"password",user.getEmail(),
-                //        user.getFirstName(),user.getLastName());
                 reqBody.close();
-
                 UserServices uServ = new UserServices();
                 try {
                     System.out.println("Trying to insert new user haha");
@@ -67,8 +55,8 @@ public class RegisterRequestHandler implements HttpHandler {
                     System.out.println(output);
                     bw.write(output);
                     bw.flush();
-                    //respBody.close();
-                    System.out.println("got to the end");
+
+
                     httpE.getResponseBody().close();
                 } catch (DataAccessException e) {
                     System.out.println("error: " + e.toString());

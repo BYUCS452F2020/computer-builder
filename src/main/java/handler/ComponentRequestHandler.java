@@ -7,14 +7,16 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.google.gson.Gson;
 import dao.DataAccessException;
+import models.request.ComponentRequest;
 import models.request.LoginRequest;
+import models.result.ComponentResult;
 import models.result.LoginResult;
 import service.UserServices;
 
 import java.io.*;
 import java.net.HttpURLConnection;
 
-public class LoginRequestHandler implements HttpHandler {
+public class ComponentRequestHandler implements HttpHandler {
     public void handle(HttpExchange httpE) throws IOException
     {
         try {
@@ -27,7 +29,8 @@ public class LoginRequestHandler implements HttpHandler {
                 httpE.sendResponseHeaders(200,0);
                 System.out.println("headers sent");
             }
-            if (httpE.getRequestMethod().toUpperCase().equals("POST")) {
+            if (httpE.getRequestMethod().toUpperCase().equals("GET")) {
+                System.out.println("getting cpus");
                 Headers reqHeaders = httpE.getRequestHeaders();
 
                 InputStream reqBody = httpE.getRequestBody();
@@ -36,11 +39,13 @@ public class LoginRequestHandler implements HttpHandler {
                 //System.out.println("br " + br.);
 
                 Gson gson = new Gson();
-                LoginRequest logReq = gson.fromJson(br, LoginRequest.class);
+                ComponentRequest compReq = gson.fromJson(br, ComponentRequest.class);
                 reqBody.close();
-                UserServices uServ = new UserServices();
+                //TODO implement component services
+                /*
+                ComponentServices cServ = new UComponentServices();
                 try {
-                    LoginResult logRes = uServ.login(logReq);
+                    ComponentResult compRes = cServ.getComponents(compReq);
                     OutputStream respBody = httpE.getResponseBody();
                     Gson ogson = new GsonBuilder().setPrettyPrinting().create();
                     String output = ogson.toJson(logRes);
@@ -55,6 +60,8 @@ public class LoginRequestHandler implements HttpHandler {
                 } catch (DataAccessException e) {
                     httpE.getResponseBody().close();
                 }
+                */
+
             } else {
                 httpE.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
             }

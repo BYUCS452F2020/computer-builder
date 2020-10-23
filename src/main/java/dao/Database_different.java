@@ -8,9 +8,24 @@ import java.sql.Statement;
 /**
  * Database class performs the connection between the data access objects and the database.
  */
-public class Database {
-
+public class Database_different {
+    private static Database_different instance = null;
     Connection connection;
+
+    public static Database_different getInstance() {
+        if(instance == null) {
+            instance = new Database_different();
+        }
+
+        return instance;
+    }
+
+    public void Database() throws DataAccessException
+    {
+        openConnection();
+        createTables();
+        closeConnection(false);
+    }
 
     /**
      * Opens a connection to a sqlite database.
