@@ -171,86 +171,76 @@ export default new Vuex.Store({
       }
     },
     async getCPUs(context, data) {
-      if (!context.state.motherboardChosen){
-        try {
-          let response = await axios.get("http://localhost:8081/component", data);
-          context.commit('setCPUs', response.data);
-          return "";
-        } catch (error) {
-          return "";
-        }
-      }
-      if (context.state.motherboardChosen){
-        //get it but with mobo constraints
-      }
-    },
-    async getMotherboards(context) {
-      if (!context.state.cpuChosen){
-        try {
-          let response = await axios.get("/api/motherboards");
-          context.commit('setMotherboards', response.data);
-          return "";
-        } catch (error) {
-          return "";
-        }
-      }
-      if (context.state.cpuChosen){
-        //get it but with mobo constraints
-      }
-    },
-    async getGPUs(context) {
       try {
-        let response = await axios.get("/api/gpus");
+        let response = await axios.get("http://localhost:8081/component", data);
+        context.commit('setCPUs', response.data);
+        return "";
+      } catch (error) {
+        return "couldn't get cpus";
+      }      
+    },
+    async getMotherboards(context, data) {
+      try {
+        let response = await axios.get("http://localhost:8081/component", data);
+        context.commit('setMotherboards', response.data);
+        return "";
+      } catch (error) {
+        return "couldn't get mobos";
+      }  
+    },
+    async getGPUs(context, data) {
+      try {
+        let response = await axios.get("http://localhost:8081/component", data);
         context.commit('setGPUs', response.data);
         return "";
       } catch (error) {
-        return "";
-      }
+        return "couldn't get gpus";
+      }  
     },
-    async getRams(context) {
+    async getRams(context, data) {
       try {
-        let response = await axios.get("/api/rams");
-        context.commit('setRams', response.data);
+        let response = await axios.get("http://localhost:8081/component", data);
+        context.commit('setRAMs', response.data);
         return "";
       } catch (error) {
-        return "";
-      }
+        return "couldn't get rams";
+      }  
     },
-    async getStorages(context) {
+    async getStorages(context, data) {
       try {
-        let response = await axios.get("/api/storages");
+        let response = await axios.get("http://localhost:8081/component", data);
         context.commit('setStorages', response.data);
         return "";
       } catch (error) {
-        return "";
-      }
+        return "couldn't get storages";
+      }  
     },
-    async getPSUs(context) {
+    async getPSUs(context, data) {
       try {
-        let response = await axios.get("/api/psus");
+        let response = await axios.get("http://localhost:8081/component", data);
         context.commit('setPSUs', response.data);
         return "";
       } catch (error) {
-        return "";
-      }
+        return "couldn't get psus";
+      }  
     },
-    async getCoolers(context) {
+    async getCoolers(context, data) {
       try {
-        let response = await axios.get("/api/coolers");
+        let response = await axios.get("http://localhost:8081/component", data);
         context.commit('setCoolers', response.data);
         return "";
       } catch (error) {
-        return "";
-      }
+        return "couldn't get coolers";
+      }  
     },
-    async getCases(context) {
+    async getCases(context, data) {
       try {
-        let response = await axios.get("/api/cases");
+        let response = await axios.get("http://localhost:8081/component", data);
         context.commit('setCases', response.data);
         return "";
       } catch (error) {
-        return "";
-      }
+        return "couldn't get cases";
+      }  
     }
   }, 
 })

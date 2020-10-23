@@ -40,10 +40,6 @@ export default {
   },
   props: {
   },
-  created() {
-        //TODO get all possible components
-        this.getAllComponents();
-  },
   methods: {
     async saveBuild() {
       try {

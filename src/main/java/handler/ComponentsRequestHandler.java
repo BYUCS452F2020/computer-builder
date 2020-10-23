@@ -16,7 +16,7 @@ import service.UserServices;
 import java.io.*;
 import java.net.HttpURLConnection;
 
-public class ComponentRequestHandler implements HttpHandler {
+public class ComponentsRequestHandler implements HttpHandler {
     public void handle(HttpExchange httpE) throws IOException
     {
         try {
@@ -30,7 +30,7 @@ public class ComponentRequestHandler implements HttpHandler {
                 System.out.println("headers sent");
             }
             if (httpE.getRequestMethod().toUpperCase().equals("GET")) {
-                System.out.println("getting cpus");
+                System.out.println("getting components");
                 Headers reqHeaders = httpE.getRequestHeaders();
 
                 InputStream reqBody = httpE.getRequestBody();
@@ -61,7 +61,7 @@ public class ComponentRequestHandler implements HttpHandler {
                     httpE.getResponseBody().close();
                 }
                 */
-
+                System.out.println("done getting cpus");
             } else {
                 httpE.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
             }
