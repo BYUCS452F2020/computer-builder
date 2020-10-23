@@ -8,9 +8,24 @@ import java.sql.Statement;
 /**
  * Database class performs the connection between the data access objects and the database.
  */
-public class Database {
-
+public class Database_different {
+    private static Database_different instance = null;
     Connection connection;
+
+    public static Database_different getInstance() {
+        if(instance == null) {
+            instance = new Database_different();
+        }
+
+        return instance;
+    }
+
+    public void Database() throws DataAccessException
+    {
+        openConnection();
+        createTables();
+        closeConnection(false);
+    }
 
     /**
      * Opens a connection to a sqlite database.
@@ -40,10 +55,6 @@ public class Database {
         else {
             return connection;
         }
-    }
-
-    public boolean isOpenConnection() {
-        return connection != null;
     }
 
     /**
@@ -78,12 +89,13 @@ public class Database {
 
             String sql = "CREATE TABLE IF NOT EXISTS Users " +
                     "(" +
-                    "username text not null unique, " +
+                    "user_id text not null unique, " +
                     "first_name text not null, " +
                     "last_name text not null, " +
-                    "password bigint not null, " +
+                    "username text not null, " +
+                    "password int not null, " +
                     "email text not null, " +
-                    "primary key (username)" +
+                    "primary key (user_id)" +
                     ");" +
                     "CREATE TABLE IF NOT EXISTS Components " +
                     "(" +
@@ -92,10 +104,9 @@ public class Database {
                     "component_type text not null, " +
                     "manufacturer text not null, " +
                     "performance_rating int not null, " +
-                    "price decimal(10,2) not null, " +
+                    "price int not null, " +
                     "cpu_family text, " +
-                    "tdp bigint, " +
-                    "image_url text, " +
+                    "tdp int, " +
                     "primary key (component_id)" +
                     ")";
 

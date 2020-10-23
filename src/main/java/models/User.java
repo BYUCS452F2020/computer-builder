@@ -102,3 +102,4 @@ public class User {
         return Objects.hash(username, firstName, lastName, email);
     }
 }
+
