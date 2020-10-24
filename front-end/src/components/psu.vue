@@ -1,11 +1,12 @@
 <template>
     <div>
         <p>
-            <button class="component_label" v-on:click="toggleVisible()">PSUS</button>
+            <button class="component_label" v-on:click="toggleVisible()">Psus</button>
             <span v-if="show">
                 <ul>
-                    <li v-for="psu in this.$store.psus" :key="psu.name">
-                        {{psu.name}}: ${{psu.price}}
+                    <li v-for="psu in this.$store.getters.getPsus" :key="psu.name">
+                        {{psu.componentName}}: ${{psu.price}}
+                        <button @click="addToBuild(psu)">Add to build</button>
                     </li>
                 </ul>
             </span>
@@ -15,10 +16,10 @@
 
 <script>
 export default {
-    name: "PSUs",
+    name: "Psus",
     data() {
         return {
-            thePSUS: [{
+            thePsuS: [{
                 name: "psu 1",
                 price: 100
             },
@@ -27,8 +28,12 @@ export default {
                 price: 150
             }
             ],
-            show: false
+            show: false,
+            currentPsu: null
         }
+    },
+    async created() {
+        this.getPsus();
     },
     methods: {
         toggleVisible() {
@@ -37,6 +42,27 @@ export default {
             }
             else {
                 this.show = true
+            }
+        },
+        addToBuild(psu) {
+            this.$store.commit({
+                type: "changePsu",
+                amount: psu
+            });
+            this.$store.commit("togglePsu")
+        },
+        async getPsus () {
+            try {
+                this.error = await this.$store.dispatch("getPSUs", {
+                componentType: "PSU",
+                cpuFamily: this.$store.getters.getCpuFamily,
+                performanceRating: this.$store.getters.getPerformanceRating,
+                maxPrice: this.$store.getters.getMaxPrice
+                });
+            if (this.error === "")
+                console.log("success! got psus")
+            } catch (error) {
+                console.log(error);
             }
         }
     }

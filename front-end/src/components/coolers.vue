@@ -4,8 +4,9 @@
             <button class="component_label" v-on:click="toggleVisible()">Coolers</button>
             <span v-if="show">
                 <ul>
-                    <li v-for="cooler in this.$store.coolers" :key="cooler.name">
-                        {{cooler.name}}: ${{cooler.price}}
+                    <li v-for="cooler in this.$store.getters.getCoolers" :key="cooler.name">
+                        {{cooler.componentName}}: ${{cooler.price}}
+                        <button @click="addToBuild(cooler)">Add to build</button>
                     </li>
                 </ul>
             </span>
@@ -15,20 +16,24 @@
 
 <script>
 export default {
-    name: "coolers",
+    name: "Coolers",
     data() {
         return {
-            theCoolers: [{
+            theCoolerS: [{
                 name: "cooler 1",
-                price: 20
+                price: 100
             },
             {
                 name: "cooler 2",
-                price: 45
+                price: 150
             }
             ],
-            show: false
+            show: false,
+            currentCooler: null
         }
+    },
+    async created() {
+        this.getCoolers();
     },
     methods: {
         toggleVisible() {
@@ -38,11 +43,28 @@ export default {
             else {
                 this.show = true
             }
+        },
+        addToBuild(cooler) {
+            this.$store.commit({
+                type: "changeCooler",
+                amount: cooler
+            });
+            this.$store.commit("toggleCooler")
+        },
+        async getCoolers () {
+            try {
+                this.error = await this.$store.dispatch("getCoolers", {
+                componentType: "Cooler",
+                cpuFamily: this.$store.getters.getCpuFamily,
+                performanceRating: this.$store.getters.getPerformanceRating,
+                maxPrice: this.$store.getters.getMaxPrice
+                });
+            if (this.error === "")
+                console.log("success! got coolers")
+            } catch (error) {
+                console.log(error);
+            }
         }
     }
 }
 </script>
-
-<style>
-
-</style>

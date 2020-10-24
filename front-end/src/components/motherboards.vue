@@ -1,11 +1,12 @@
 <template>
     <div>
         <p>
-            <button class="component_label" v-on:click="toggleVisible()">MOBOS</button>
+            <button class="component_label" v-on:click="toggleVisible()">Motherboards</button>
             <span v-if="show">
                 <ul>
-                    <li v-for="motherboard in this.$store.motherboards" :key="motherboard.name">
-                        {{motherboard.name}}: ${{motherboard.price}}
+                    <li v-for="motherboard in this.$store.getters.getMotherboards" :key="motherboard.name">
+                        {{motherboard.componentName}}: ${{motherboard.price}}
+                        <button @click="addToBuild(motherboard)">Add to build</button>
                     </li>
                 </ul>
             </span>
@@ -15,20 +16,24 @@
 
 <script>
 export default {
-    name: "motherboards",
+    name: "Motherboards",
     data() {
         return {
-            theMOBOS: [{
-                name: "mobo 1",
-                price: 75
+            theMotherboardS: [{
+                name: "motherboard 1",
+                price: 100
             },
             {
-                name: "mobo 2",
-                price: 125
+                name: "motherboard 2",
+                price: 150
             }
             ],
-            show: false
+            show: false,
+            currentMotherboard: null
         }
+    },
+    async created() {
+        this.getMotherboards();
     },
     methods: {
         toggleVisible() {
@@ -37,6 +42,27 @@ export default {
             }
             else {
                 this.show = true
+            }
+        },
+        addToBuild(motherboard) {
+            this.$store.commit({
+                type: "changeMotherboard",
+                amount: motherboard
+            });
+            this.$store.commit("toggleMotherboard")
+        },
+        async getMotherboards () {
+            try {
+                this.error = await this.$store.dispatch("getMotherboards", {
+                componentType: "Motherboard",
+                cpuFamily: this.$store.getters.getCpuFamily,
+                performanceRating: this.$store.getters.getPerformanceRating,
+                maxPrice: this.$store.getters.getMaxPrice
+                });
+            if (this.error === "")
+                console.log("success! got motherboards")
+            } catch (error) {
+                console.log(error);
             }
         }
     }

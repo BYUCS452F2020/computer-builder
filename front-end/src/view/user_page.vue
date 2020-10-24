@@ -24,22 +24,21 @@
                 <button class="register_button" v-on:click="registerDatabase()">Register</button>
 
             </span>
-            <span v-if="!loggedOut" & !registering>
+            <span v-if="!loggedOut & !registering">
                 This is where a list of your builds will be once we have this linked with the backend
+                
                 <button class="log-out_button" v-on:click="logOut()">Log Out</button>
             </span>
-            <Builds/>
+            
         </div>
     </div>
 </template>
 
 <script>
-import Builds from "../user/user_builds.vue"
 
 export default {
     name: 'user',
     components: {
-        Builds
     },
     computed: {
         user() {
@@ -82,8 +81,11 @@ export default {
                     lastName: this.lastName,
                     email: this.email
                 });
-                if (this.error === "")
+                if (this.error === "") {
                     this.$router.push('user');
+                    this.registering = false
+                    this.loggedOut = false
+                }
             } catch (error) {
                 console.log(error);
             }

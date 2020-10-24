@@ -4,8 +4,8 @@
             <button class="component_label" v-on:click="toggleVisible()">CPUS</button>
             <span v-if="show">
                 <ul>
-                    <li v-for="cpu in this.$store.cpus" :key="cpu.name">
-                        {{cpu.name}}: ${{cpu.price}}
+                    <li v-for="cpu in this.$store.getters.getCpus" :key="cpu.name">
+                        {{cpu.componentName}}: ${{cpu.price}}
                         <button @click="addToBuild(cpu)">Add to build</button>
                     </li>
                 </ul>
@@ -55,9 +55,9 @@ export default {
             try {
                 this.error = await this.$store.dispatch("getCPUs", {
                 componentType: "CPU",
-                maxPrice: this.$store.maxPrice,
-                performanceRating: this.$store.performanceRating,
-                cpuFamily: this.$store.cpuFamily
+                cpuFamily: this.$store.getters.getCpuFamily,
+                performanceRating: this.$store.getters.getPerformanceRating,
+                maxPrice: this.$store.getters.getMaxPrice
                 });
             if (this.error === "")
                 console.log("success! got cpus")

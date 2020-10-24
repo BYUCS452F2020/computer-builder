@@ -1,11 +1,12 @@
 <template>
     <div>
         <p>
-            <button class="component_label" v-on:click="toggleVisible()">Storage</button>
+            <button class="component_label" v-on:click="toggleVisible()">Storages</button>
             <span v-if="show">
                 <ul>
-                    <li v-for="storage in this.$store.storages" :key="storage.name">
-                        {{storage.name}}: ${{storage.price}}
+                    <li v-for="storage in this.$store.getters.getStorages" :key="storage.name">
+                        {{storage.componentName}}: ${{storage.price}}
+                        <button @click="addToBuild(storage)">Add to build</button>
                     </li>
                 </ul>
             </span>
@@ -15,10 +16,10 @@
 
 <script>
 export default {
-    name: "storages",
+    name: "Storages",
     data() {
         return {
-            theStorages: [{
+            theStorageS: [{
                 name: "storage 1",
                 price: 100
             },
@@ -27,8 +28,12 @@ export default {
                 price: 150
             }
             ],
-            show: false
+            show: false,
+            currentStorage: null
         }
+    },
+    async created() {
+        this.getStorages();
     },
     methods: {
         toggleVisible() {
@@ -37,6 +42,27 @@ export default {
             }
             else {
                 this.show = true
+            }
+        },
+        addToBuild(storage) {
+            this.$store.commit({
+                type: "changeStorage",
+                amount: storage
+            });
+            this.$store.commit("toggleStorage")
+        },
+        async getStorages () {
+            try {
+                this.error = await this.$store.dispatch("getStorages", {
+                componentType: "Storage",
+                cpuFamily: this.$store.getters.getCpuFamily,
+                performanceRating: this.$store.getters.getPerformanceRating,
+                maxPrice: this.$store.getters.getMaxPrice
+                });
+            if (this.error === "")
+                console.log("success! got storages")
+            } catch (error) {
+                console.log(error);
             }
         }
     }
