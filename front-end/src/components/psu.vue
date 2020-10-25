@@ -54,7 +54,7 @@ export default {
         async getPsus () {
             try {
                 this.error = await this.$store.dispatch("getPSUs", {
-                componentType: "PSU",
+                componentType: "Power-Supply",
                 cpuFamily: this.$store.getters.getCpuFamily,
                 performanceRating: this.$store.getters.getPerformanceRating,
                 maxPrice: this.$store.getters.getMaxPrice
