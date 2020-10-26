@@ -11,6 +11,10 @@ import java.sql.Connection;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.fail;
 
+/*
+    The Database has been populated so do not run any tests at this time.
+ */
+
 public class DatabaseTest {
 
     private Database databaseToTest = null;
