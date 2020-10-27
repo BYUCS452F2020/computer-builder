@@ -8,7 +8,6 @@
         <outputRelativeToContentRoot value="true" />
         <module name="computer-builder" />
         <module name="computerbuilder" />
-        <module name="computer-builder" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="8" />

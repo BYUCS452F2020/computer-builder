@@ -25,7 +25,9 @@ public class UserServices {
         try {
             UserDAO userDao = new UserDAO(conn);
             String userID = r.getUsername() + r.getFirstName() + r.getLastName();
-            User u = new User(userID, r.getFirstName(),r.getLastName(),r.getUsername(), r.getEmail());
+            // Todo: Fix this string cannot be converted to int. Temporary fix on the line below
+            //User u = new User(userID, r.getFirstName(),r.getLastName(),r.getUsername(), r.getEmail());
+            User u = new User(r.getUsername(), r.getFirstName(),r.getLastName(), r.getEmail());
             u.setPassword(r.getPassword());
             userDao.insert(u);
             db.closeConnection(true);
