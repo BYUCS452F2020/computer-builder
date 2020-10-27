@@ -8,10 +8,13 @@ import com.sun.net.httpserver.HttpHandler;
 import com.google.gson.Gson;
 import dao.DataAccessException;
 import models.request.ComponentRequest;
+import models.request.GetComponentsRequest;
 import models.request.LoginRequest;
 import models.result.ComponentResult;
+import models.result.GetComponentsResult;
 import models.result.LoginResult;
 import service.UserServices;
+import services.ComponentServices;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -39,13 +42,12 @@ public class ComponentsRequestHandler implements HttpHandler {
                 //System.out.println("br " + br.);
 
                 Gson gson = new Gson();
-                ComponentRequest compReq = gson.fromJson(br, ComponentRequest.class);
+                GetComponentsRequest compReq = gson.fromJson(br, GetComponentsRequest.class);
                 reqBody.close();
                 //TODO implement component services
-                /*
-                ComponentServices cServ = new UComponentServices();
+                /*ComponentServices cServ = new ComponentServices();
                 try {
-                    ComponentResult compRes = cServ.getComponents(compReq);
+                    GetComponentsResult compRes = cServ.queryComponents(compReq);
                     OutputStream respBody = httpE.getResponseBody();
                     Gson ogson = new GsonBuilder().setPrettyPrinting().create();
                     String output = ogson.toJson(logRes);
