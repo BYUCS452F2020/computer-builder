@@ -6,15 +6,15 @@ import com.google.gson.annotations.SerializedName;
  * Contains all the fields necessary for a successful user login. All variables are required.
  */
 public class UserBuildsRequest {
-    public UserBuildsRequest(String username) {
-        this.username = username;
-
-    }
 
     @SerializedName("username")
-    String username;
+    private String username;
 
-    public String getusername() {
+    public UserBuildsRequest(String username) {
+        this.username = username;
+    }
+
+    public String getUsername() {
         return username;
     }
 

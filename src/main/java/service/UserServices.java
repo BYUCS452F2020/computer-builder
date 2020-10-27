@@ -24,7 +24,6 @@ public class UserServices {
         //System.out.println(conn.toString());
         try {
             UserDAO userDao = new UserDAO(conn);
-            //String userID = r.getUsername() + r.getFirstName() + r.getLastName();
             User u = new User(r.getUsername(), r.getFirstName(),r.getLastName(), r.getEmail());
             u.setPassword(r.getPassword());
             userDao.insert(u);
