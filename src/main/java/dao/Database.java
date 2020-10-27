@@ -97,7 +97,25 @@ public class Database {
                     "tdp bigint, " +
                     "image_url text, " +
                     "primary key (component_id)" +
+                    ");" +
+                    "CREATE TABLE IF NOT EXISTS Builds " +
+                    "(" +
+                    "build_id text not null unique, " +
+                    "user_id text not null, " +
+                    "build_name text not null, " +
+                    "motherboard text not null, " +
+                    "processor text not null, " +
+                    "cpu_cooler text not null, " +
+                    "memory text not null, " +
+                    "storage text not null, " +
+                    "graphics_card text, " +
+                    "power_supply text not null, " +
+                    "pc_case text not null, " +
+                    "primary key (build_id)" +
                     ")";
+                    // Todo: Was there another component that was optional besides the graphics_card?
+                    // Todo: Enable foreign key constraints in Builds table?
+                    // FOREIGN KEY(user_id) REFERENCES Users(username)
 
             stmt.executeUpdate(sql);
         } catch (SQLException e) {
@@ -113,7 +131,8 @@ public class Database {
     public void clearTables() throws DataAccessException {
         try (Statement stmt = connection.createStatement()) {
             String sql = "DELETE FROM Users; " +
-                    "DELETE FROM Components";
+                    "DELETE FROM Components;" +
+                    "DELETE FROM Builds";
 
             stmt.executeUpdate(sql);
         } catch (SQLException e) {
@@ -129,7 +148,8 @@ public class Database {
     public void deleteTables() throws DataAccessException {
         try (Statement stmt = connection.createStatement()) {
             String sql = "DROP TABLE IF EXISTS Users; " +
-                    "DROP TABLE IF EXISTS Components";
+                    "DROP TABLE IF EXISTS Components;" +
+                    "DROP TABLE IF EXISTS Builds";
             stmt.executeUpdate(sql);
         } catch (SQLException e) {
             e.printStackTrace();

@@ -28,3 +28,13 @@ IC211HTPC, CPU Cooler, Logisys, 1, 22.00, Intel, 0
 Ninja 5, CPU Cooler, Scythe, 7, 59.99, null, 0
 LOKI SD963, CPU Cooler, Xigmatek, 4, 22.95, null, 0
 MasterLiquid ML240L RGB 120mm, CPU Cooler, Cooler Master, 6, 74.99, null, 0
+4GB DDR4-2400, Memory, Crucial, 3, 29.99, null, 0
+8GB DDR4-2666, Memory, Crucial, 6, 49.99, null, 0
+16GB DDR4-3200, Memory, Crucial, 9, 79.99, null, 0
+860 EVO SATA 2.5 SSD 250GB, Storage, Samsung, 3, 49.99, null, 0
+860 EVO SATA M.2 SSD 500GB, Storage, Samsung, 6, 89.99, null, 0
+970 EVO NVMe M.2 SSD 1TB, Storage, Samsung, 9, 149.99, null, 0
+970 EVO Plus NVMe M.2 SSD 2TB, Storage, Samsung, 9, 299.99, null, 0
+MSI GTX 1660 VENTUS XS 6GB GDDR5, GPU, MSI, 3, 214.99, null, 120
+MSI RTX SUPER GAMING X TRIO GEFORCE RTX 2070 SUPER 8GB GDDR6, GPU, MSI, 6, 569.99, null, 215
+MSI GEFORCE RTX 3080 GAMING X TRIO 10GB GDDR6, GPU, MSI, 9, 759.99, null, 340
