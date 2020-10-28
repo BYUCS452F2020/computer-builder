@@ -17,6 +17,6 @@ public class ComputerBuilderServer {
     private void registerHandlers(HttpServer server) {
         server.createContext("/user/register", new RegisterRequestHandler());
         server.createContext("/user/login", new LoginRequestHandler());
-        server.createContext("/component", new ComponentsRequestHandler());
+        server.createContext("/component/", new ComponentsRequestHandler());
     }
 }

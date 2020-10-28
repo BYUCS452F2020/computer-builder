@@ -8,13 +8,12 @@ import com.sun.net.httpserver.HttpHandler;
 import com.google.gson.Gson;
 import dao.DataAccessException;
 import models.request.ComponentRequest;
-import models.request.LoginRequest;
 import models.result.ComponentResult;
-import models.result.LoginResult;
-import service.UserServices;
+import service.*;
 
 import java.io.*;
 import java.net.HttpURLConnection;
+import java.util.List;
 
 public class ComponentsRequestHandler implements HttpHandler {
     public void handle(HttpExchange httpE) throws IOException
@@ -29,26 +28,35 @@ public class ComponentsRequestHandler implements HttpHandler {
                 httpE.sendResponseHeaders(200,0);
                 System.out.println("headers sent");
             }
-            if (httpE.getRequestMethod().toUpperCase().equals("GET")) {
+            else if (httpE.getRequestMethod().toUpperCase().equals("GET")) {
                 System.out.println("getting components");
                 Headers reqHeaders = httpE.getRequestHeaders();
+                String URI = httpE.getRequestURI().toString();
 
-                InputStream reqBody = httpE.getRequestBody();
+                String[] URIList = httpE.getRequestURI().toString().split("/");
+                for(int i =0; i < URIList.length; i++) {
+                    System.out.println(i + ": " +URIList[i]);
+                }
+                /*InputStream reqBody = httpE.getRequestBody();
                 InputStreamReader isr = new InputStreamReader(reqBody);
                 BufferedReader br = new BufferedReader(isr);
-                //System.out.println("br " + br.);
+                String s = null;
 
-                Gson gson = new Gson();
-                ComponentRequest compReq = gson.fromJson(br, ComponentRequest.class);
-                reqBody.close();
-                //TODO implement component services
-                /*
-                ComponentServices cServ = new UComponentServices();
+
+                Gson gson = new Gson();*/
+                ComponentRequest compReq = new ComponentRequest(URIList[2],URIList[3],Integer.parseInt(URIList[4]),Integer.parseInt(URIList[5]));
+                if (compReq.getCpuFamily().equals("null")) {
+                    compReq.setCpuFamily(null);
+                }
+                System.out.println("componenttype: " + compReq.getComponentType());
+                //reqBody.close();
+
+                ComponentServices cServ = new ComponentServices();
                 try {
-                    ComponentResult compRes = cServ.getComponents(compReq);
+                    ComponentResult compRes = cServ.queryComponents(compReq);
                     OutputStream respBody = httpE.getResponseBody();
                     Gson ogson = new GsonBuilder().setPrettyPrinting().create();
-                    String output = ogson.toJson(logRes);
+                    String output = ogson.toJson(compRes);
                     OutputStreamWriter sw = new OutputStreamWriter(respBody);
                     BufferedWriter bw = new BufferedWriter(sw);
                     httpE.sendResponseHeaders(200,0);
@@ -58,10 +66,11 @@ public class ComponentsRequestHandler implements HttpHandler {
                     //respBody.close();
                     httpE.getResponseBody().close();
                 } catch (DataAccessException e) {
+                    System.out.println(e.getMessage());
                     httpE.getResponseBody().close();
                 }
-                */
-                System.out.println("done getting cpus");
+
+                System.out.println("done getting " + compReq.getComponentType());
             } else {
                 httpE.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
             }

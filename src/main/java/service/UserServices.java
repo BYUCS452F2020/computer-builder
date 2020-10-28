@@ -2,7 +2,7 @@ package service;
 
 
 import dao.DataAccessException;
-import dao.Database_different;
+import dao.Database;
 import dao.UserDAO;
 import models.User;
 import models.request.*;
@@ -18,14 +18,13 @@ public class UserServices {
     public RegisterResult register(RegisterRequest r) throws DataAccessException
     {
         System.out.println(r.getUsername());
-        Database_different db = Database_different.getInstance();
+        Database db = new Database();
 
         Connection conn = db.openConnection();
         //System.out.println(conn.toString());
         try {
             UserDAO userDao = new UserDAO(conn);
-            String userID = r.getUsername() + r.getFirstName() + r.getLastName();
-            User u = new User(userID, r.getFirstName(),r.getLastName(),r.getUsername(), r.getEmail());
+            User u = new User(r.getUsername(), r.getFirstName(),r.getLastName(), r.getEmail());
             u.setPassword(r.getPassword());
             userDao.insert(u);
             db.closeConnection(true);
@@ -40,7 +39,7 @@ public class UserServices {
     public LoginResult login(LoginRequest r) throws DataAccessException
     {
         System.out.println(r.getUsername());
-        Database_different db = Database_different.getInstance();
+        Database db = new Database();
 
          /*Connection conn = db.openConnection();
         //System.out.println(conn.toString());
