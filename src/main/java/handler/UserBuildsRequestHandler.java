@@ -12,7 +12,9 @@ import models.request.LoginRequest;
 import models.request.UserBuildsRequest;
 import models.result.ComponentResult;
 import models.result.LoginResult;
+import models.result.UserBuildsResult;
 import service.UserServices;
+import services.BuildService;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -43,13 +45,13 @@ public class UserBuildsRequestHandler implements HttpHandler {
                 UserBuildsRequest buildsReq = gson.fromJson(br, UserBuildsRequest.class);
                 reqBody.close();
                 //TODO implement build services
-                /*
-                BuildServices bServ = new BuildServices();
-                try {
+
+                BuildService bServ = new BuildService();
+//                try {
                     UserBuildsResult compRes = bServ.getUserBuilds(buildsReq);
                     OutputStream respBody = httpE.getResponseBody();
                     Gson ogson = new GsonBuilder().setPrettyPrinting().create();
-                    String output = ogson.toJson(logRes);
+                    String output = ogson.toJson(compRes);
                     OutputStreamWriter sw = new OutputStreamWriter(respBody);
                     BufferedWriter bw = new BufferedWriter(sw);
                     httpE.sendResponseHeaders(200,0);
@@ -58,10 +60,10 @@ public class UserBuildsRequestHandler implements HttpHandler {
                     bw.flush();
                     //respBody.close();
                     httpE.getResponseBody().close();
-                } catch (DataAccessException e) {
-                    httpE.getResponseBody().close();
-                }
-                */
+//                } catch (Exception e) {
+//                    httpE.getResponseBody().close();
+//                }
+
                 System.out.println("done getting cpus");
             } else {
                 httpE.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
