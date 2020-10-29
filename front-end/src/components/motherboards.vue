@@ -45,11 +45,7 @@ export default {
             }
         },
         addToBuild(motherboard) {
-            this.$store.commit({
-                type: "changeMotherboard",
-                amount: motherboard
-            });
-            this.$store.commit("toggleMotherboard")
+            this.$store.commit('changeMotherboard', motherboard);
         },
         async getMotherboards () {
             try {

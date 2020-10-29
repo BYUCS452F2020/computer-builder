@@ -45,11 +45,7 @@ export default {
             }
         },
         addToBuild(psu) {
-            this.$store.commit({
-                type: "changePsu",
-                amount: psu
-            });
-            this.$store.commit("togglePsu")
+            this.$store.commit('changePSU', psu);
         },
         async getPsus () {
             try {

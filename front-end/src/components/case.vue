@@ -36,11 +36,7 @@ export default {
             }
         },
         addToBuild(casE) {
-            this.$store.commit({
-                type: "changeCase",
-                amount: casE
-            });
-            this.$store.commit("toggleCase")
+            this.$store.commit('changeCase', casE);
         },
         async getCases () {
             try {

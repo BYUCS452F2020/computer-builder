@@ -40,7 +40,9 @@ public class ComponentServices {
                     request.getComponentType(), request.getMaxPrice(), request.getPerformanceRating(),
                     request.getCpuFamily());
             result = new ComponentResult(true, components);
+            database.closeConnection(true);
         } catch (DataAccessException e) {
+            database.closeConnection(false);
             result = new ComponentResult(false, e.getMessage());
         }
 

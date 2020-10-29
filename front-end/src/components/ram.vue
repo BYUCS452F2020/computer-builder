@@ -4,7 +4,7 @@
             <button class="component_label" v-on:click="toggleVisible()">RAMs</button>
             <span v-if="show">
                 <ul>
-                    <li v-for="ram in this.$store.getters.getRAMs" :key="ram.name">
+                    <li v-for="ram in this.$store.getters.getRams" :key="ram.name">
                         {{ram.componentName}}: ${{ram.price}}
                         <button @click="addToBuild(ram)">Add to build</button>
                     </li>
@@ -45,16 +45,12 @@ export default {
             }
         },
         addToBuild(ram) {
-            this.$store.commit({
-                type: "changeRAM",
-                amount: ram
-            });
-            this.$store.commit("toggleRAM")
+            this.$store.commit('changeRAM', ram);
         },
         async getRAMs () {
             try {
                 this.error = await this.$store.dispatch("getRams", {
-                componentType: "RAM",
+                componentType: "Memory",
                 cpuFamily: this.$store.getters.getCpuFamily,
                 performanceRating: this.$store.getters.getPerformanceRating,
                 maxPrice: this.$store.getters.getMaxPrice

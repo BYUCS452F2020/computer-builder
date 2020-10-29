@@ -8,9 +8,12 @@ import com.sun.net.httpserver.HttpHandler;
 import dao.DataAccessException;
 import models.User;
 import models.request.RegisterRequest;
+import models.request.SaveBuildRequest;
 import models.result.RegisterResult;
+import models.result.SaveBuildResult;
 import service.UserServices;
 import com.google.gson.Gson;
+import services.BuildService;
 
 import javax.xml.crypto.Data;
 import java.io.*;
@@ -18,7 +21,7 @@ import java.net.HttpURLConnection;
 import java.net.InetSocketAddress;
 import java.nio.file.Files;
 
-public class RegisterRequestHandler implements HttpHandler {
+public class SaveBuildHandler implements HttpHandler {
 
     public void handle(HttpExchange httpE) throws IOException
     {
@@ -40,15 +43,15 @@ public class RegisterRequestHandler implements HttpHandler {
 
                 Gson gson = new Gson();
 
-                RegisterRequest regReq = gson.fromJson(br, RegisterRequest.class);
+                SaveBuildRequest sbReq = gson.fromJson(br, SaveBuildRequest.class);
                 reqBody.close();
-                UserServices uServ = new UserServices();
+                BuildService bServe = new BuildService();
                 try {
-                    System.out.println("Trying to insert new user haha");
-                    RegisterResult regRes = uServ.register(regReq);
+                    System.out.println("Trying to insert new build");
+                    SaveBuildResult sbRes = bServe.insertNewBuild(sbReq);
                     OutputStream respBody = httpE.getResponseBody();
                     Gson ogson = new GsonBuilder().setPrettyPrinting().create();
-                    String output = ogson.toJson(regRes);
+                    String output = ogson.toJson(sbRes);
                     OutputStreamWriter sw = new OutputStreamWriter(respBody);
                     BufferedWriter bw = new BufferedWriter(sw);
                     httpE.sendResponseHeaders(200,0);

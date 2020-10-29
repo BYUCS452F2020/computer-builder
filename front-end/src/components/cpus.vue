@@ -45,10 +45,7 @@ export default {
             }
         },
         addToBuild(cpu) {
-            this.$store.commit({
-                type: "changeCPU",
-                amount: cpu
-            });
+            this.$store.commit('changeCPU', cpu);
             this.$store.commit("toggleCPU")
         },
         async getCPUs () {

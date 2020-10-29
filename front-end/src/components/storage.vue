@@ -45,11 +45,7 @@ export default {
             }
         },
         addToBuild(storage) {
-            this.$store.commit({
-                type: "changeStorage",
-                amount: storage
-            });
-            this.$store.commit("toggleStorage")
+            this.$store.commit('changeStorage', storage);
         },
         async getStorages () {
             try {

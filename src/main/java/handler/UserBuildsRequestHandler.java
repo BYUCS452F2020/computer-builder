@@ -36,22 +36,23 @@ public class UserBuildsRequestHandler implements HttpHandler {
                 System.out.println("getting user builds");
                 Headers reqHeaders = httpE.getRequestHeaders();
 
-                InputStream reqBody = httpE.getRequestBody();
-                InputStreamReader isr = new InputStreamReader(reqBody);
-                BufferedReader br = new BufferedReader(isr);
-                //System.out.println("br " + br.);
+                String URI = httpE.getRequestURI().toString();
 
-                Gson gson = new Gson();
-                UserBuildsRequest buildsReq = gson.fromJson(br, UserBuildsRequest.class);
-                reqBody.close();
-                //TODO implement build services
+                String[] URIList = httpE.getRequestURI().toString().split("/");
+                for(int i =0; i < URIList.length; i++) {
+                    System.out.println(i + ": " +URIList[i]);
+                }
+
+                UserBuildsRequest ubReq = new UserBuildsRequest(URIList[2]);
+
+                System.out.println("username: " + ubReq.getUsername());
 
                 BuildService bServ = new BuildService();
-//                try {
-                    UserBuildsResult compRes = bServ.getUserBuilds(buildsReq);
+                try {
+                    UserBuildsResult ubRes = bServ.getUserBuilds(ubReq);
                     OutputStream respBody = httpE.getResponseBody();
                     Gson ogson = new GsonBuilder().setPrettyPrinting().create();
-                    String output = ogson.toJson(compRes);
+                    String output = ogson.toJson(ubRes);
                     OutputStreamWriter sw = new OutputStreamWriter(respBody);
                     BufferedWriter bw = new BufferedWriter(sw);
                     httpE.sendResponseHeaders(200,0);
@@ -60,9 +61,9 @@ public class UserBuildsRequestHandler implements HttpHandler {
                     bw.flush();
                     //respBody.close();
                     httpE.getResponseBody().close();
-//                } catch (Exception e) {
-//                    httpE.getResponseBody().close();
-//                }
+                } catch (Exception e) {
+                   httpE.getResponseBody().close();
+               }
 
                 System.out.println("done getting cpus");
             } else {

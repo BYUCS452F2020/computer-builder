@@ -7,6 +7,7 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.google.gson.Gson;
 import dao.DataAccessException;
+import models.request.ComponentRequest;
 import models.request.LoginRequest;
 import models.result.LoginResult;
 import service.UserServices;
@@ -28,16 +29,20 @@ public class LoginRequestHandler implements HttpHandler {
                 System.out.println("headers sent");
             }
             if (httpE.getRequestMethod().toUpperCase().equals("POST")) {
+                System.out.println("login attempt");
                 Headers reqHeaders = httpE.getRequestHeaders();
 
-                InputStream reqBody = httpE.getRequestBody();
-                InputStreamReader isr = new InputStreamReader(reqBody);
-                BufferedReader br = new BufferedReader(isr);
-                //System.out.println("br " + br.);
+                String URI = httpE.getRequestURI().toString();
 
-                Gson gson = new Gson();
-                LoginRequest logReq = gson.fromJson(br, LoginRequest.class);
-                reqBody.close();
+                String[] URIList = httpE.getRequestURI().toString().split("/");
+                for(int i =0; i < URIList.length; i++) {
+                    System.out.println(i + ": " +URIList[i]);
+                }
+
+                LoginRequest logReq = new LoginRequest(URIList[3],URIList[4]);
+
+                System.out.println("username: " + logReq.getUsername());
+
                 UserServices uServ = new UserServices();
                 try {
                     LoginResult logRes = uServ.login(logReq);

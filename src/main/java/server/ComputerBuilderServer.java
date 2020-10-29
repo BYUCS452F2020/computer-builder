@@ -18,5 +18,8 @@ public class ComputerBuilderServer {
         server.createContext("/user/register", new RegisterRequestHandler());
         server.createContext("/user/login", new LoginRequestHandler());
         server.createContext("/component/", new ComponentsRequestHandler());
+        server.createContext("/one_component/", new SingleComponentRequestHandler());
+        server.createContext("/builds/insert", new SaveBuildHandler());
+        server.createContext("/build/", new UserBuildsRequestHandler());
     }
 }

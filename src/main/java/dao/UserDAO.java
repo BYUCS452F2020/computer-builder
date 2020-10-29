@@ -36,6 +36,7 @@ public class UserDAO {
 
         try(PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, username);
+            System.out.println("finding user with name: " + username);
             rs = stmt.executeQuery();
             if(rs.next()) {
                 user = new User(rs.getString("username"), rs.getString("first_name"),

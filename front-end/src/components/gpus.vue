@@ -45,11 +45,7 @@ export default {
             }
         },
         addToBuild(gpu) {
-            this.$store.commit({
-                type: "changeGpu",
-                amount: gpu
-            });
-            this.$store.commit("toggleGpu")
+            this.$store.commit('changeGPU', gpu);
         },
         async getGpus () {
             try {

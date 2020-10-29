@@ -45,11 +45,7 @@ export default {
             }
         },
         addToBuild(cooler) {
-            this.$store.commit({
-                type: "changeCooler",
-                amount: cooler
-            });
-            this.$store.commit("toggleCooler")
+            this.$store.commit('changeCooler', cooler);
         },
         async getCoolers () {
             try {
