@@ -2,6 +2,8 @@
   <div>
     
       <h1>Builder Page</h1>
+      <span id="wrapper">
+      <span id="listOfComps">
       <CPUs/>
       <MOBOs/>
       <GPUs/>
@@ -10,8 +12,38 @@
       <PSUs/>
       <Coolers/>
       <Cases/>
-
+      <input v-model="build_name" placeholder="Name your build">
       <button class="component_label" v-on:click="saveBuild()">Save build</button>
+      </span>
+      <span id="currentBuild">
+        <h3>Your Current Build</h3>
+        <span v-if="this.$store.getters.cpuChosen">
+        <p>CPU: {{this.$store.getters.getCurrentBuild.cpu.componentName}}</p>
+        </span>
+        <span v-if="this.$store.getters.motherboardChosen">
+        <p>Motherboard: {{this.$store.getters.getCurrentBuild.motherboard.componentName}}</p>
+        </span>
+        <span v-if="this.$store.getters.gpuChosen">
+        <p>GPU: {{this.$store.getters.getCurrentBuild.gpu.componentName}}</p>
+        </span>
+        <span v-if="this.$store.getters.ramChosen">
+        <p>RAM: {{this.$store.getters.getCurrentBuild.ram.componentName}}</p>
+        </span>
+        <span v-if="this.$store.getters.storageChosen">
+        <p>Storage: {{this.$store.getters.getCurrentBuild.storage.componentName}}</p>
+        </span>
+        <span v-if="this.$store.getters.psuChosen">
+        <p>Power Supply: {{this.$store.getters.getCurrentBuild.psu.componentName}}</p>
+        </span>
+        <span v-if="this.$store.getters.coolerChosen">
+        <p>CPU Cooler: {{this.$store.getters.getCurrentBuild.cooler.componentName}}</p>
+        </span>
+        <span v-if="this.$store.getters.caseChosen">
+        <p>Case: {{this.$store.getters.getCurrentBuild.case.componentName}}</p>
+        </span>
+        <p>Name: {{build_name}}</p>
+      </span>
+      </span>
     </div>
     
 </template>
@@ -40,13 +72,21 @@ export default {
   },
   props: {
   },
+  data () {
+    return {
+      build_name: ""
+    }
+  },
   methods: {
     async saveBuild() {
       try {
         //TODO dispatch adding build
-        this.error = await this.$store.dispatch()
-        const formData = new FormData();
-        formData.append('userID', this.$store.user.username);
+        if (this.$store.getters.getUser == null) {
+          console.log("GOTTA BE LOGGED IN!!!!!!")
+          return
+        }
+        this.$store.commit('changeName', this.build_name);
+        this.error = await this.$store.dispatch("saveCurrentBuild")
         if (!this.error) {
           this.title = '';
           this.description = '';
@@ -101,4 +141,8 @@ a {
   justify-content: flex-end;
 }
 
+#wrapper {
+  display: flex;
+  justify-content: center;
+}
 </style>

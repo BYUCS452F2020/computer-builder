@@ -30,7 +30,8 @@ export default new Vuex.Store({
       storage: null,
       psu: null,
       cooler: null,
-      case: null 
+      case: null ,
+      name: null
     },
   },
   mutations: {
@@ -66,11 +67,11 @@ export default new Vuex.Store({
         state.cases = cases;
     },
     changeCPU(state, cpu) {
-      console.log("changing cpu!")
+      console.log("changing cpu to: " + cpu.componentName)
         state.currentBuild.cpu = cpu;
     },
     changeMotherboard(state, mobo) {
-        state.currentBuild.mobo = mobo;
+        state.currentBuild.motherboard = mobo;
     },
     changeGPU(state, gpu) {
         state.currentBuild.gpu = gpu;
@@ -84,23 +85,20 @@ export default new Vuex.Store({
     changePSU(state, psu) {
         state.currentBuild.psu = psu;
     },
-    changeCoolers(state, coolers) {
-        state.currentBuild.coolers = coolers;
+    changeCooler(state, cooler) {
+        state.currentBuild.cooler = cooler;
     },
-    changeCases(state, cases) {
-        state.currentBuild.cases = cases;
+    changeCase(state, casE) {
+        state.currentBuild.case = casE;
+    },
+    changeName(state, name) {
+      state.currentBuild.name = name
     },
     toggleCPU(state) {
-      if (state.cpuChosen == true)
-        state.cpuChosen = false;
-      else
         state.cpuChosen = true;
       console.log("CPU is now " + state.cpuChosen)
     },
     toggleMotherboard(state) {
-      if (state.motherboardChosen == true)
-        state.motherboardChosen = false;
-      else
         state.motherboardChosen = true;
     },
     setPSUReq(state, num) {
@@ -110,6 +108,99 @@ export default new Vuex.Store({
       else {
         state.totalPSUReq = state.totalPSUReq + num;
       }
+    }
+  },
+  getters: {
+    getUser(state) {
+      return state.user
+    },
+    getBuilds (state) {
+      return state.builds
+    },
+    getMaxPrice(state) {
+      return state.maxPrice
+    },
+    getPerformanceRating(state) {
+      return state.performanceRating
+    },
+    getCpuFamily(state) {
+      return state.cpuFamily
+    },
+    getCpus(state) {
+      return state.cpus
+    },
+    getMotherboards(state) {
+      return state.motherboards
+    },
+    getGpus(state) {
+      return state.gpus
+    },
+    getRams(state) {
+      return state.rams
+    },
+    getStorages(state) {
+      return state.storages
+    },
+    getPsus(state) {
+      return state.psus
+    },
+    getCoolers(state) {
+      return state.coolers
+    },
+    getCases(state) {
+      return state.cases
+    },
+    getCurrentBuild(state) {
+      console.log("getting current build")
+      return state.currentBuild
+    },
+    cpuChosen(state) {
+      if (state.currentBuild.cpu != null)
+        return true
+      else
+        return false
+    },
+    motherboardChosen(state) {
+      if (state.currentBuild.motherboard != null)
+        return true
+      else
+        return false
+    },
+    gpuChosen(state) {
+      if (state.currentBuild.gpu != null)
+        return true
+      else
+        return false
+    },
+    ramChosen(state) {
+      if (state.currentBuild.ram != null)
+        return true
+      else
+        return false
+    },
+    storageChosen(state) {
+      if (state.currentBuild.storage != null)
+        return true
+      else
+        return false
+    },
+    psuChosen(state) {
+      if (state.currentBuild.psu != null)
+        return true
+      else
+        return false
+    },
+    coolerChosen(state) {
+      if (state.currentBuild.cooler != null)
+        return true
+      else
+        return false
+    },
+    caseChosen(state) {
+      if (state.currentBuild.case != null)
+        return true
+      else
+        return false
     }
   },
     actions: {
@@ -128,7 +219,9 @@ export default new Vuex.Store({
     async login(context, data) {
       try {
         console.log(data)
-        let response = await axios.post("http://localhost:8081/user/login", data);
+        let response = await axios.post("http://localhost:8081/user/login/" +
+                                          data.username + "/" +
+                                          data.password);
         context.commit('setUser', response.data);
         return "";
       } catch (error) {
@@ -155,25 +248,52 @@ export default new Vuex.Store({
     },
     async getUserBuilds(context) {
       try {
-        let response = await axios.get("/api/builds");
+        let response = await axios.get("http://localhost:8081/build/"
+                                        + this.getters.getUser)
         context.commit('setBuilds', response.data);
         return "";
       } catch (error) {
         return "";
       }
     },
-    async addBuild(context, data) {
+    async saveCurrentBuild() {
       try {
-        await axios.post('/api/builds', data);
+        let currentBuild = this.getters.getCurrentBuild
+        console.log(this.getters.getUser)
+        console.log(currentBuild.name)
+        await axios.post('http://localhost:8081/builds/insert', {
+          username: this.getters.getUser,
+          cpu: currentBuild.cpu.componentID,
+          motherboard: currentBuild.motherboard.componentID,
+          gpu: currentBuild.gpu.componentID,
+          ram: currentBuild.ram.componentID,
+          storage: currentBuild.storage.componentID,
+          psu: currentBuild.psu.componentID,
+          cooler: currentBuild.cooler.componentID,
+          pc_case: currentBuild.case.componentID,
+          build_name: currentBuild.name
+        });
         return "";
       } catch (error) {
         return error.response.data.message;
       }
     },
+    async getSingleComponent(context, data) {
+      try {
+        let response = await axios.get("http://localhost:8081/one_component/" + data.componentID)
+        return response.data
+      } catch (error) {
+        return "couldn't get cpus";
+      }      
+    },
     async getCPUs(context, data) {
       try {
-        let response = await axios.get("http://localhost:8081/component", data);
-        context.commit('setCPUs', response.data);
+        let response = await axios.get("http://localhost:8081/component/" +
+                                        data.componentType + "/" +
+                                        data.cpuFamily + "/" +
+                                        data.performanceRating + "/" +
+                                        data.maxPrice);
+        context.commit('setCPUs', response.data.components);
         return "";
       } catch (error) {
         return "couldn't get cpus";
@@ -181,17 +301,25 @@ export default new Vuex.Store({
     },
     async getMotherboards(context, data) {
       try {
-        let response = await axios.get("http://localhost:8081/component", data);
-        context.commit('setMotherboards', response.data);
+        let response = await axios.get("http://localhost:8081/component/" +
+                                        data.componentType + "/" +
+                                        data.cpuFamily + "/" +
+                                        data.performanceRating + "/" +
+                                        data.maxPrice);
+        context.commit('setMotherboards', response.data.components);
         return "";
       } catch (error) {
-        return "couldn't get mobos";
+        return "couldn't get motherboards";
       }  
     },
     async getGPUs(context, data) {
       try {
-        let response = await axios.get("http://localhost:8081/component", data);
-        context.commit('setGPUs', response.data);
+        let response = await axios.get("http://localhost:8081/component/" +
+                                        data.componentType + "/" +
+                                        data.cpuFamily + "/" +
+                                        data.performanceRating + "/" +
+                                        data.maxPrice);
+        context.commit('setGPUs', response.data.components);
         return "";
       } catch (error) {
         return "couldn't get gpus";
@@ -199,35 +327,51 @@ export default new Vuex.Store({
     },
     async getRams(context, data) {
       try {
-        let response = await axios.get("http://localhost:8081/component", data);
-        context.commit('setRAMs', response.data);
+        let response = await axios.get("http://localhost:8081/component/" +
+                                        data.componentType + "/" +
+                                        data.cpuFamily + "/" +
+                                        data.performanceRating + "/" +
+                                        data.maxPrice);
+        context.commit('setRams', response.data.components);
         return "";
       } catch (error) {
         return "couldn't get rams";
-      }  
+      } 
     },
     async getStorages(context, data) {
       try {
-        let response = await axios.get("http://localhost:8081/component", data);
-        context.commit('setStorages', response.data);
+        let response = await axios.get("http://localhost:8081/component/" +
+                                        data.componentType + "/" +
+                                        data.cpuFamily + "/" +
+                                        data.performanceRating + "/" +
+                                        data.maxPrice);
+        context.commit('setStorages', response.data.components);
         return "";
       } catch (error) {
         return "couldn't get storages";
-      }  
+      } 
     },
     async getPSUs(context, data) {
       try {
-        let response = await axios.get("http://localhost:8081/component", data);
-        context.commit('setPSUs', response.data);
+        let response = await axios.get("http://localhost:8081/component/" +
+                                        data.componentType + "/" +
+                                        data.cpuFamily + "/" +
+                                        data.performanceRating + "/" +
+                                        data.maxPrice);
+        context.commit('setPSUs', response.data.components);
         return "";
       } catch (error) {
         return "couldn't get psus";
-      }  
+      } 
     },
     async getCoolers(context, data) {
       try {
-        let response = await axios.get("http://localhost:8081/component", data);
-        context.commit('setCoolers', response.data);
+        let response = await axios.get("http://localhost:8081/component/" +
+                                        data.componentType + "/" +
+                                        data.cpuFamily + "/" +
+                                        data.performanceRating + "/" +
+                                        data.maxPrice);
+        context.commit('setCoolers', response.data.components);
         return "";
       } catch (error) {
         return "couldn't get coolers";
@@ -235,12 +379,16 @@ export default new Vuex.Store({
     },
     async getCases(context, data) {
       try {
-        let response = await axios.get("http://localhost:8081/component", data);
-        context.commit('setCases', response.data);
+        let response = await axios.get("http://localhost:8081/component/" +
+                                        data.componentType + "/" +
+                                        data.cpuFamily + "/" +
+                                        data.performanceRating + "/" +
+                                        data.maxPrice);
+        context.commit('setCases', response.data.components);
         return "";
       } catch (error) {
         return "couldn't get cases";
-      }  
+      } 
     }
   }, 
 })
