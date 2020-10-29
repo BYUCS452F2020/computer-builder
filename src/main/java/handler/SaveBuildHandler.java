@@ -5,20 +5,28 @@ import com.google.gson.GsonBuilder;
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import com.google.gson.Gson;
 import dao.DataAccessException;
-import models.request.ComponentRequest;
-import models.result.ComponentResult;
-import service.*;
+import models.User;
+import models.request.RegisterRequest;
+import models.request.SaveBuildRequest;
+import models.result.RegisterResult;
+import models.result.SaveBuildResult;
+import service.UserServices;
+import com.google.gson.Gson;
+import services.BuildService;
 
+import javax.xml.crypto.Data;
 import java.io.*;
 import java.net.HttpURLConnection;
-import java.util.List;
+import java.net.InetSocketAddress;
+import java.nio.file.Files;
 
-public class ComponentsRequestHandler implements HttpHandler {
+public class SaveBuildHandler implements HttpHandler {
+
     public void handle(HttpExchange httpE) throws IOException
     {
         try {
+            System.out.println(httpE.getRequestMethod());
             if (httpE.getRequestMethod().toUpperCase().equals("OPTIONS")) {
                 httpE.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
                 httpE.getResponseHeaders().add("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
@@ -28,55 +36,46 @@ public class ComponentsRequestHandler implements HttpHandler {
                 httpE.sendResponseHeaders(200,0);
                 System.out.println("headers sent");
             }
-            else if (httpE.getRequestMethod().toUpperCase().equals("GET")) {
-                System.out.println("getting components");
-                Headers reqHeaders = httpE.getRequestHeaders();
-                String URI = httpE.getRequestURI().toString();
-
-                String[] URIList = httpE.getRequestURI().toString().split("/");
-                for(int i =0; i < URIList.length; i++) {
-                    System.out.println(i + ": " +URIList[i]);
-                }
-                /*InputStream reqBody = httpE.getRequestBody();
+            else if (httpE.getRequestMethod().toUpperCase().equals("POST")) {
+                InputStream reqBody = httpE.getRequestBody();
                 InputStreamReader isr = new InputStreamReader(reqBody);
                 BufferedReader br = new BufferedReader(isr);
-                String s = null;
 
+                Gson gson = new Gson();
 
-
-                Gson gson = new Gson();*/
-                ComponentRequest compReq = new ComponentRequest(URIList[2],URIList[3],Integer.parseInt(URIList[4]),Integer.parseInt(URIList[5]));
-                if (compReq.getCpuFamily().equals("null")) {
-                    compReq.setCpuFamily(null);
-                }
-                System.out.println("componenttype: " + compReq.getComponentType());
-                //reqBody.close();
-
-                ComponentServices cServ = new ComponentServices();
+                SaveBuildRequest sbReq = gson.fromJson(br, SaveBuildRequest.class);
+                reqBody.close();
+                BuildService bServe = new BuildService();
                 try {
-                    ComponentResult compRes = cServ.queryComponents(compReq);
+                    System.out.println("Trying to insert new build");
+                    SaveBuildResult sbRes = bServe.insertNewBuild(sbReq);
                     OutputStream respBody = httpE.getResponseBody();
                     Gson ogson = new GsonBuilder().setPrettyPrinting().create();
-                    String output = ogson.toJson(compRes);
+                    String output = ogson.toJson(sbRes);
                     OutputStreamWriter sw = new OutputStreamWriter(respBody);
                     BufferedWriter bw = new BufferedWriter(sw);
                     httpE.sendResponseHeaders(200,0);
                     System.out.println(output);
                     bw.write(output);
                     bw.flush();
-                    //respBody.close();
+
+
                     httpE.getResponseBody().close();
                 } catch (DataAccessException e) {
-                    System.out.println(e.getMessage());
+                    System.out.println("error: " + e.toString());
                     httpE.getResponseBody().close();
                 }
 
-                System.out.println("done getting " + compReq.getComponentType());
+
             } else {
+                System.out.println("bad req");
                 httpE.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
             }
+
+
         } catch (IOException e) {
-            httpE.sendResponseHeaders(HttpURLConnection.HTTP_SERVER_ERROR, 0);
+            System.out.println("error: " + e.getMessage() + e.getStackTrace()[2] + ": " + e.getStackTrace()[2].getLineNumber());
+            httpE.sendResponseHeaders(500, 0);
             httpE.getResponseBody().close();
 
             e.printStackTrace();

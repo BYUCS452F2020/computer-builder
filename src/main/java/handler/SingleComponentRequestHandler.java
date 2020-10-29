@@ -8,14 +8,16 @@ import com.sun.net.httpserver.HttpHandler;
 import com.google.gson.Gson;
 import dao.DataAccessException;
 import models.request.ComponentRequest;
+import models.request.GetSingleComponentRequest;
 import models.result.ComponentResult;
+import models.result.GetSingleComponentResult;
 import service.*;
 
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.util.List;
 
-public class ComponentsRequestHandler implements HttpHandler {
+public class SingleComponentRequestHandler implements HttpHandler {
     public void handle(HttpExchange httpE) throws IOException
     {
         try {
@@ -43,18 +45,15 @@ public class ComponentsRequestHandler implements HttpHandler {
                 String s = null;
 
 
-
                 Gson gson = new Gson();*/
-                ComponentRequest compReq = new ComponentRequest(URIList[2],URIList[3],Integer.parseInt(URIList[4]),Integer.parseInt(URIList[5]));
-                if (compReq.getCpuFamily().equals("null")) {
-                    compReq.setCpuFamily(null);
-                }
-                System.out.println("componenttype: " + compReq.getComponentType());
+                GetSingleComponentRequest compReq = new GetSingleComponentRequest(URIList[2]);
+
+                System.out.println("componentID: " + compReq.getComponentId());
                 //reqBody.close();
 
                 ComponentServices cServ = new ComponentServices();
                 try {
-                    ComponentResult compRes = cServ.queryComponents(compReq);
+                    GetSingleComponentResult compRes = cServ.getComponent(compReq);
                     OutputStream respBody = httpE.getResponseBody();
                     Gson ogson = new GsonBuilder().setPrettyPrinting().create();
                     String output = ogson.toJson(compRes);
@@ -71,7 +70,6 @@ public class ComponentsRequestHandler implements HttpHandler {
                     httpE.getResponseBody().close();
                 }
 
-                System.out.println("done getting " + compReq.getComponentType());
             } else {
                 httpE.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
             }

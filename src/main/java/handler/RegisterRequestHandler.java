@@ -61,7 +61,6 @@ public class RegisterRequestHandler implements HttpHandler {
                 } catch (DataAccessException e) {
                     System.out.println("error: " + e.toString());
                     httpE.getResponseBody().close();
-                    return;
                 }
 
 
