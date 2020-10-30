@@ -78,14 +78,17 @@ public class ComponentDAO {
         ResultSet rs = null;
         String sql = "SELECT * FROM Components WHERE component_type = ?";
         if (maxPrice != 0) {
+            System.out.println("maxprice");
             isPriced = true;
             sql += " AND price <= ?";
         }
         if (performanceRating != 0) {
+            System.out.println("prating");
             isPerformance = true;
             sql += " AND performance_rating = ?";
         }
         if (cpuFamily != null) {
+            System.out.println("cpufam");
             isCPUFamily = true;
             sql += " AND cpu_family = ?";
         }
