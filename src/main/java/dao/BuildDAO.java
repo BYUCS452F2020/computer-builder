@@ -22,6 +22,7 @@ public class BuildDAO
 
 	public void insert(Build build) throws DataAccessException
 	{
+		System.out.println("inserting into builds");
 		String sql = "INSERT INTO Builds (build_id, user_id, build_name, " +
 				"motherboard, processor, cpu_cooler, memory, storage, graphics_card, power_supply, pc_case) " +
 				"VALUES (?,?,?,?,?,?,?,?,?,?,?)";

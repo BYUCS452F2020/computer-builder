@@ -24,33 +24,31 @@
                 <button class="register_button" v-on:click="registerDatabase()">Register</button>
 
             </span>
-            <span v-if="!loggedOut" & !registering>
-                This is where a list of your builds will be once we have this linked with the backend
+            <span v-if="!loggedOut & !registering">
+                <UserBuilds/>
+                
                 <button class="log-out_button" v-on:click="logOut()">Log Out</button>
             </span>
-            <Builds/>
+            
         </div>
     </div>
 </template>
 
 <script>
-import Builds from "../user/user_builds.vue"
+
+import UserBuilds from "../user/user_builds.vue"
 
 export default {
     name: 'user',
     components: {
-        Builds
+        UserBuilds
     },
     computed: {
-        user() {
-            return this.$store.state.user;
-        },
-        builds() {
-            return this.$store.state.builds;
-        }
     },
     created() {
         //TODO get all users builds
+        if (this.$store.getters.getUser == null)
+            this.logOut
     },
     data() {
         return {
@@ -59,8 +57,9 @@ export default {
             firstName: "",
             lastName: "",
             email: "",
-            loggedOut: true,
-            registering: false
+            loggedOut: false,
+            registering: false,
+            builds: []
         }
     },
     methods: {
@@ -82,8 +81,10 @@ export default {
                     lastName: this.lastName,
                     email: this.email
                 });
-                if (this.error === "")
-                    this.$router.push('user');
+                if (this.error === "") {
+                    this.registering = false
+                    this.loggedOut = false
+                }
             } catch (error) {
                 console.log(error);
             }
@@ -94,8 +95,10 @@ export default {
                 username: this.username,
                 password: this.password
             });
-            if (this.error === "")
-                this.$router.push('user');
+            if (this.error === "") {
+                this.registering = false
+                this.loggedOut = false
+            }
             } catch (error) {
                 console.log(error);
             }
