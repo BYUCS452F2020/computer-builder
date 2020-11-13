@@ -2,6 +2,7 @@
     <div>
         <p>
             <button class="component_label" v-on:click="toggleVisible()">CPUS</button>
+            <input v-model="max_price" type="number" @blur="getCPUs()" placeholder="Enter your price limit here">
             <span v-if="show">
                 <ul>
                     <li v-for="cpu in this.$store.getters.getCpus" :key="cpu.name">
@@ -29,7 +30,8 @@ export default {
             }
             ],
             show: false,
-            currentCPU: null
+            currentCPU: null,
+            max_price: 0
         }
     },
     async created() {
@@ -44,17 +46,30 @@ export default {
                 this.show = true
             }
         },
-        addToBuild(cpu) {
+        async addToBuild(cpu) {
             this.$store.commit('changeCPU', cpu);
+            try {
+                this.error = await this.$store.dispatch("getMotherboards", {
+                componentType: "Motherboard",
+                cpuFamily: this.$store.getters.getCpuFamily,
+                performanceRating: this.$store.getters.getPerformanceRating,
+                maxPrice: this.$store.getters.getMaxPrice
+                });
+            if (this.error === "")
+                console.log("success! got mobos")
+            } catch (error) {
+                console.log(error);
+            }
             this.$store.commit("toggleCPU")
         },
         async getCPUs () {
             try {
+                console.log("getting cpus")
                 this.error = await this.$store.dispatch("getCPUs", {
                 componentType: "CPU",
                 cpuFamily: this.$store.getters.getCpuFamily,
                 performanceRating: this.$store.getters.getPerformanceRating,
-                maxPrice: this.$store.getters.getMaxPrice
+                maxPrice: this.max_price
                 });
             if (this.error === "")
                 console.log("success! got cpus")

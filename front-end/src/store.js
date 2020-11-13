@@ -69,9 +69,15 @@ export default new Vuex.Store({
     changeCPU(state, cpu) {
       console.log("changing cpu to: " + cpu.componentName)
         state.currentBuild.cpu = cpu;
+        //set cpu family
+        state.cpuFamily = cpu.cpuFamily;
+        console.log("set cpu family to" + cpu.cpuFamily)
     },
     changeMotherboard(state, mobo) {
         state.currentBuild.motherboard = mobo;
+        //set cpu family
+        state.cpuFamily = mobo.cpuFamily;
+        console.log("set cpu family to" + mobo.cpuFamily)
     },
     changeGPU(state, gpu) {
         state.currentBuild.gpu = gpu;
