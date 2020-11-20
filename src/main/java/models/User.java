@@ -1,14 +1,20 @@
 package models;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.Map;
 import java.util.Objects;
 
 public class User {
 
+    @SerializedName("first_name")
     private String firstName;
+    @SerializedName("last_name")
     private String lastName;
+    @SerializedName("username")
     private String username;
     private int password;
+    @SerializedName("email")
     private String email;
     //private Map<String, Build> builds;
 
