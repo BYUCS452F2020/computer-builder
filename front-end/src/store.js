@@ -229,7 +229,7 @@ export default new Vuex.Store({
                                           data.username + "/" +
                                           data.password);
         context.commit('setUser', response.data);
-        return "";
+        return response.data.username;
       } catch (error) {
         return error.response.data.message;
       }
