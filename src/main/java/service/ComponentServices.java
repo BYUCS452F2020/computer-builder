@@ -38,7 +38,7 @@ public class ComponentServices {
             ComponentDAO componentDAO = new ComponentDAO(database.openConnection());
             List<Component> components = componentDAO.queryComponentsWithConditions(
                     request.getComponentType(), request.getMaxPrice(), request.getPerformanceRating(),
-                    request.getCpuFamily());
+                    request.getCpuFamily(), request.getTdp());
             result = new ComponentResult(true, components);
             database.closeConnection(true);
         } catch (DataAccessException e) {

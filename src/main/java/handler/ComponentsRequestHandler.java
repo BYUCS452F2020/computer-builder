@@ -13,7 +13,6 @@ import service.*;
 
 import java.io.*;
 import java.net.HttpURLConnection;
-import java.util.List;
 
 public class ComponentsRequestHandler implements HttpHandler {
     public void handle(HttpExchange httpE) throws IOException
@@ -45,7 +44,7 @@ public class ComponentsRequestHandler implements HttpHandler {
 
 
                 Gson gson = new Gson();*/
-                ComponentRequest compReq = new ComponentRequest(URIList[2],URIList[3],Integer.parseInt(URIList[4]),Integer.parseInt(URIList[5]));
+                ComponentRequest compReq = new ComponentRequest(URIList[2],URIList[3],Integer.parseInt(URIList[4]),Integer.parseInt(URIList[5]), 0);
                 if (compReq.getCpuFamily().equals("null")) {
                     compReq.setCpuFamily(null);
                 }

@@ -6,11 +6,12 @@ import com.google.gson.annotations.SerializedName;
  * Contains all the fields necessary for a successful user login. All variables are required.
  */
 public class ComponentRequest {
-    public ComponentRequest(String componentType, String cpuFamily, int performanceRating, int maxPrice) {
+    public ComponentRequest(String componentType, String cpuFamily, int performanceRating, int maxPrice, int tdp) {
         this.componentType = componentType;
         this.cpuFamily = cpuFamily;
         this.maxPrice = maxPrice;
         this.performanceRating = performanceRating;
+        this.tdp = tdp;
     }
 
     @SerializedName("componentType")
@@ -21,6 +22,8 @@ public class ComponentRequest {
     int performanceRating;
     @SerializedName("maxPrice")
     int maxPrice;
+    @SerializedName("tdp")
+    int tdp;
 
     public String getComponentType() {
         return componentType;
@@ -52,6 +55,14 @@ public class ComponentRequest {
 
     public void setMaxPrice(int maxPrice) {
         this.maxPrice = maxPrice;
+    }
+
+    public int getTdp() {
+        return tdp;
+    }
+
+    public void setTdp(int tdp) {
+        this.tdp = tdp;
     }
 }
 
