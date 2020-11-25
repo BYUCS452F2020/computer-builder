@@ -1,13 +1,13 @@
 package service;
 
 
-import dao.DataAccessException;
-import dao.Database;
-import dao.UserDAO;
+import com.mongodb.client.MongoDatabase;
+import dao.*;
 import models.User;
 import models.request.*;
 import models.result.*;
 
+import javax.swing.text.html.StyleSheet;
 import java.sql.Connection;
 
 
@@ -17,21 +17,37 @@ import java.sql.Connection;
 public class UserServices {
     public RegisterResult register(RegisterRequest r) throws DataAccessException
     {
-        System.out.println(r.getUsername());
-        Database db = new Database();
+        System.out.println("registering: " + r.getUsername());
+        //Old SQLite DB
+        //Database db = new Database();
 
-        Connection conn = db.openConnection();
+        //New mongoDB datbase
+        MongoDatabase db = MongoDBDatabase.getDB();
+
+        System.out.println("got db");
+
+        //Don't need to make "connections" anymore
+        //Connection conn = db.openConnection();
         //System.out.println(conn.toString());
         try {
-            UserDAO userDao = new UserDAO(conn);
+            //Code for sqlite database
+            //UserDAO userDao = new UserDAO(conn);
+
+            //New MongoDB code
+            MongoDBUserDAO userDao = new MongoDBUserDAO();
+
+            System.out.println("made mongodbuserdao");
+
             User u = new User(r.getUsername(), r.getFirstName(),r.getLastName(), r.getEmail());
             u.setPassword(r.getPassword());
             userDao.insert(u);
-            db.closeConnection(true);
+
+            //Don't close connections anymore
+            //db.closeConnection(true);
             System.out.println("success");
             return new RegisterResult(r.getUsername());
         } catch (DataAccessException e) {
-            db.closeConnection(false);
+            //db.closeConnection(false);
             return new RegisterResult(e.getMessage());
         }
     }
@@ -39,27 +55,28 @@ public class UserServices {
     public LoginResult login(LoginRequest r) throws DataAccessException
     {
         System.out.println(r.getUsername());
-        Database db = new Database();
+        //Database db = new Database();
 
-         Connection conn = db.openConnection();
+        //Connection conn = db.openConnection();
 
         try {
-            UserDAO userDao = new UserDAO(conn);
+            //UserDAO userDao = new UserDAO(conn);
+            MongoDBUserDAO userDAO = new MongoDBUserDAO();
             //TODO Add find to UserDAO for login
-             User u = userDao.find(r.getUsername(), r.getPassword());
+             User u = userDAO.find(r.getUsername(), r.getPassword());
             if (u == null) {
-                db.closeConnection(false);
-                return new LoginResult("Bad login credentials (cant find you)");
+                //db.closeConnection(false);
+                return new LoginResult("Badlogincredentials");
             }
 
             System.out.println("success");
-            db.closeConnection(true);
+            //db.closeConnection(true);
             return new LoginResult(r.getUsername());
 
 
         } catch (DataAccessException e) {
-            db.closeConnection(false);
-            return new LoginResult("Bad login credentials");
+            //db.closeConnection(false);
+            return new LoginResult(null);
         }
 
     }

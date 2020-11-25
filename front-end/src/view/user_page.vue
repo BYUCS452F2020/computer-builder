@@ -95,7 +95,7 @@ export default {
                 username: this.username,
                 password: this.password
             });
-            if (this.error === "") {
+            if (this.error != "Badlogincredentials") {
                 this.registering = false
                 this.loggedOut = false
             }

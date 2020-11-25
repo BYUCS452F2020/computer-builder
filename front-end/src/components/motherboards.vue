@@ -2,6 +2,7 @@
     <div>
         <p>
             <button class="component_label" v-on:click="toggleVisible()">Motherboards</button>
+            <input v-model="max_price" type="number" @blur="getMotherboards()" placeholder="Enter your price limit here">
             <span v-if="show">
                 <ul>
                     <li v-for="motherboard in this.$store.getters.getMotherboards" :key="motherboard.name">
@@ -29,7 +30,8 @@ export default {
             }
             ],
             show: false,
-            currentMotherboard: null
+            currentMotherboard: null,
+            max_price: 0
         }
     },
     async created() {
@@ -44,8 +46,20 @@ export default {
                 this.show = true
             }
         },
-        addToBuild(motherboard) {
+        async addToBuild(motherboard) {
             this.$store.commit('changeMotherboard', motherboard);
+            try {
+                this.error = await this.$store.dispatch("getCPUs", {
+                componentType: "CPU",
+                cpuFamily: this.$store.getters.getCpuFamily,
+                performanceRating: this.$store.getters.getPerformanceRating,
+                maxPrice: this.$store.getters.getMaxPrice
+                });
+            if (this.error === "")
+                console.log("success! got cpus")
+            } catch (error) {
+                console.log(error);
+            }
         },
         async getMotherboards () {
             try {
@@ -53,7 +67,7 @@ export default {
                 componentType: "Motherboard",
                 cpuFamily: this.$store.getters.getCpuFamily,
                 performanceRating: this.$store.getters.getPerformanceRating,
-                maxPrice: this.$store.getters.getMaxPrice
+                maxPrice: this.max_price
                 });
             if (this.error === "")
                 console.log("success! got motherboards")
