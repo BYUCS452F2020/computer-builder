@@ -122,7 +122,7 @@ public class ComponentDAOTest {
             Component copiedComponent;
             componentDAOToTest.insert(testComponent);
             componentDAOToTest.insert(fakeComponent);
-            copiedComponent = componentDAOToTest.queryComponentsWithConditions(testComponent.getComponentType(), 0, 0, null).get(0);
+            copiedComponent = componentDAOToTest.queryComponentsWithConditions(testComponent.getComponentType(), 0, 0, null, 0).get(0);
             assertNotNull(copiedComponent);
             assertEquals(testComponent, copiedComponent);
             componentDAOToTest.deleteAll();
@@ -140,7 +140,7 @@ public class ComponentDAOTest {
             componentDAOToTest.insert(testComponent);
             componentDAOToTest.insert(fakeComponent);
             componentDAOToTest.insert(testComponentTwo);
-            List<Component> queriedComponents = componentDAOToTest.queryComponentsWithConditions("CPU", 0, 6, null);
+            List<Component> queriedComponents = componentDAOToTest.queryComponentsWithConditions("CPU", 0, 6, null, 0);
             assertNotNull(queriedComponents);
             assertEquals(2, queriedComponents.size());
             copiedComponent = queriedComponents.get(0);
@@ -162,7 +162,7 @@ public class ComponentDAOTest {
             componentDAOToTest.insert(testComponent);
             componentDAOToTest.insert(fakeComponent);
             componentDAOToTest.insert(testComponentTwo);
-            List<Component> queriedComponents = componentDAOToTest.queryComponentsWithConditions(testComponent.getComponentType(), 100, 0, null);
+            List<Component> queriedComponents = componentDAOToTest.queryComponentsWithConditions(testComponent.getComponentType(), 100, 0, null, 0);
             assertEquals(1, queriedComponents.size());
             copiedComponent = queriedComponents.get(0);
             assertEquals(testComponent, copiedComponent);
@@ -181,7 +181,7 @@ public class ComponentDAOTest {
             componentDAOToTest.insert(testComponent);
             componentDAOToTest.insert(fakeComponent);
             componentDAOToTest.insert(testComponentTwo);
-            List<Component> queriedComponents = componentDAOToTest.queryComponentsWithConditions(testComponent.getComponentType(), 0, 0, "Intel");
+            List<Component> queriedComponents = componentDAOToTest.queryComponentsWithConditions(testComponent.getComponentType(), 0, 0, "Intel", 0);
             assertEquals(1, queriedComponents.size());
             copiedComponent = queriedComponents.get(0);
             assertEquals(testComponentTwo, copiedComponent);
@@ -200,7 +200,7 @@ public class ComponentDAOTest {
             componentDAOToTest.insert(testComponent);
             componentDAOToTest.insert(fakeComponent);
             componentDAOToTest.insert(testComponentTwo);
-            List<Component> queriedComponents = componentDAOToTest.queryComponentsWithConditions(testComponent.getComponentType(), 100, 6, "AMD");
+            List<Component> queriedComponents = componentDAOToTest.queryComponentsWithConditions(testComponent.getComponentType(), 100, 6, "AMD", 0);
             assertEquals(1, queriedComponents.size());
             copiedComponent = queriedComponents.get(0);
             assertEquals(testComponent, copiedComponent);
