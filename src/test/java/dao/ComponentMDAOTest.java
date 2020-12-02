@@ -30,6 +30,26 @@ public class ComponentMDAOTest {
     }
 
     @Test
+    @DisplayName("Test finding many with conditions")
+    public void testFindManyConditions() {
+
+        ComponentMDAO componentMDAO = new ComponentMDAO();
+
+        Assertions.assertDoesNotThrow(() -> {
+            List<Component> componentList = new ArrayList<>();
+            componentList = componentMDAO.findMany("CPU", 200.00, 5, "Intel", 0);
+            Assertions.assertNotEquals(new ArrayList<>().toString(), componentList.toString());
+            System.out.println(componentList.size());
+            for(Component curr : componentList) {
+                System.out.println(curr.toString());
+            }
+        });
+
+    }
+
+
+
+    @Test
     public void deleteAllTest() {
         ComponentMDAO componentMDAO = new ComponentMDAO();
         componentMDAO.deleteAll();

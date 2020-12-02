@@ -61,7 +61,7 @@ public class ComponentMDAO {
         }
     }
 
-    public List<Component> findMany(String componentType, int maxPrice, int performanceRating,
+    public List<Component> findMany(String componentType, double maxPrice, int performanceRating,
                                     String cpuFamily, int maxTDP) throws DataAccessException {
         MongoDatabase database;
         try (MongoClient mongoClient = MongoClients.create()) {
@@ -69,10 +69,10 @@ public class ComponentMDAO {
             MongoCollection<Document> componentCollection = database.getCollection("components");
             Document queryDocument = new Document("componentType", componentType);
             if(performanceRating != 0) {
-                queryDocument.append("performanceRating", performanceRating);
+                queryDocument.append("performanceRating", new Document().append("$gte", performanceRating));
             }
             if(maxPrice != 0) {
-                queryDocument.append("price", maxPrice);
+                queryDocument.append("price", new Document().append("$lte", maxPrice));
             }
             if(cpuFamily != null) {
                 queryDocument.append("cpuFamily", cpuFamily);
