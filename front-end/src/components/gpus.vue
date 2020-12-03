@@ -2,10 +2,15 @@
     <div>
         <p>
             <button class="component_label" v-on:click="toggleVisible()">Gpus</button>
+            <br>
+            <br>
+            Max Price
+            <input v-model="max_price" type="number" @blur="getGpus()" placeholder="Enter your price limit here">
+
             <span v-if="show">
                 <ul>
                     <li v-for="gpu in this.$store.getters.getGpus" :key="gpu.name">
-                        {{gpu.componentName}}: ${{gpu.price}}
+                        {{gpu.componentName}}: ${{gpu.price}} PR:{{gpu.performanceRating}}
                         <button @click="addToBuild(gpu)">Add to build</button>
                     </li>
                 </ul>
@@ -29,7 +34,8 @@ export default {
             }
             ],
             show: false,
-            currentGpu: null
+            currentGpu: null,
+            max_price: 0
         }
     },
     async created() {
@@ -53,7 +59,7 @@ export default {
                 componentType: "GPU",
                 cpuFamily: this.$store.getters.getCpuFamily,
                 performanceRating: this.$store.getters.getPerformanceRating,
-                maxPrice: this.$store.getters.getMaxPrice
+                maxPrice: this.max_price
                 });
             if (this.error === "")
                 console.log("success! got gpus")

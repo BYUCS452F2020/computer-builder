@@ -2,10 +2,14 @@
     <div>
         <p>
             <button class="component_label" v-on:click="toggleVisible()">RAMs</button>
+            <br>
+            <br>
+            Max Price
+            <input v-model="max_price" type="number" @blur="getRAMs()" placeholder="Enter your price limit here">
             <span v-if="show">
                 <ul>
                     <li v-for="ram in this.$store.getters.getRams" :key="ram.name">
-                        {{ram.componentName}}: ${{ram.price}}
+                        {{ram.componentName}}: ${{ram.price}} PR:{{ram.performanceRating}}
                         <button @click="addToBuild(ram)">Add to build</button>
                     </li>
                 </ul>
@@ -29,7 +33,8 @@ export default {
             }
             ],
             show: false,
-            currentRAM: null
+            currentRAM: null,
+            max_price: 0
         }
     },
     async created() {
@@ -53,7 +58,7 @@ export default {
                 componentType: "Memory",
                 cpuFamily: this.$store.getters.getCpuFamily,
                 performanceRating: this.$store.getters.getPerformanceRating,
-                maxPrice: this.$store.getters.getMaxPrice
+                maxPrice: this.max_price
                 });
             if (this.error === "")
                 console.log("success! got rams")

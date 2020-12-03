@@ -2,10 +2,14 @@
     <div>
         <p>
             <button class="component_label" v-on:click="toggleVisible()">Storages</button>
+            <br>
+            <br>
+            Max Price
+            <input v-model="max_price" type="number" @blur="getStorages()" placeholder="Enter your price limit here">
             <span v-if="show">
                 <ul>
                     <li v-for="storage in this.$store.getters.getStorages" :key="storage.name">
-                        {{storage.componentName}}: ${{storage.price}}
+                        {{storage.componentName}}: ${{storage.price}} PR:{{storage.performanceRating}}
                         <button @click="addToBuild(storage)">Add to build</button>
                     </li>
                 </ul>
@@ -29,7 +33,8 @@ export default {
             }
             ],
             show: false,
-            currentStorage: null
+            currentStorage: null,
+            max_price: 0
         }
     },
     async created() {
@@ -53,7 +58,7 @@ export default {
                 componentType: "Storage",
                 cpuFamily: this.$store.getters.getCpuFamily,
                 performanceRating: this.$store.getters.getPerformanceRating,
-                maxPrice: this.$store.getters.getMaxPrice
+                maxPrice: this.max_price
                 });
             if (this.error === "")
                 console.log("success! got storages")

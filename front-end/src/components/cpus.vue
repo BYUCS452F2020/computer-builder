@@ -2,11 +2,14 @@
     <div>
         <p>
             <button class="component_label" v-on:click="toggleVisible()">CPUS</button>
+            <br>
+            <br>
+            Max Price
             <input v-model="max_price" type="number" @blur="getCPUs()" placeholder="Enter your price limit here">
             <span v-if="show">
                 <ul>
                     <li v-for="cpu in this.$store.getters.getCpus" :key="cpu.name">
-                        {{cpu.componentName}}: ${{cpu.price}}
+                        {{cpu.componentName}}: ${{cpu.price}} PR:{{cpu.performanceRating}}
                         <button @click="addToBuild(cpu)">Add to build</button>
                     </li>
                 </ul>
@@ -65,6 +68,8 @@ export default {
         async getCPUs () {
             try {
                 console.log("getting cpus")
+                let pr = this.$store.getters.getPerformanceRating
+                console.log("pr is" + pr)
                 this.error = await this.$store.dispatch("getCPUs", {
                 componentType: "CPU",
                 cpuFamily: this.$store.getters.getCpuFamily,

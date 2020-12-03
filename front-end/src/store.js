@@ -114,6 +114,12 @@ export default new Vuex.Store({
       else {
         state.totalPSUReq = state.totalPSUReq + num;
       }
+    },
+    updatePerformanceRating(state, pr) {
+      state.performanceRating = pr
+    },
+    updateMaxBudget(state, maxBudget) {
+      state.maxPrice = maxBudget
     }
   },
   getters: {
