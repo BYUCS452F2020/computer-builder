@@ -1,12 +1,19 @@
 <template>
     <div>
         <p>
-            <button class="component_label" v-on:click="toggleVisible()">Psus</button>
+            <button class="component_label" v-on:click="toggleVisible()">Power Supply</button>
+            <br>
+            <br>
+            Max Price
+            <input v-model="max_price" type="number" @blur="getPsus()" placeholder="Enter your price limit here">
+
             <span v-if="show">
-                <ul>
+                <ul class="item_list" >
                     <li v-for="psu in this.$store.getters.getPsus" :key="psu.name">
-                        {{psu.componentName}}: ${{psu.price}}
-                        <button @click="addToBuild(psu)">Add to build</button>
+                        {{psu.componentName}}: ${{psu.price}} <br> PR:{{psu.performanceRating}}
+                        <br>
+                        <button @click="addToBuild(cpu)">Add to build</button>
+                        <br><br>
                     </li>
                 </ul>
             </span>
@@ -29,7 +36,8 @@ export default {
             }
             ],
             show: false,
-            currentPsu: null
+            currentPsu: null,
+            max_price: 0
         }
     },
     async created() {
@@ -53,7 +61,7 @@ export default {
                 componentType: "Power-Supply",
                 cpuFamily: this.$store.getters.getCpuFamily,
                 performanceRating: this.$store.getters.getPerformanceRating,
-                maxPrice: this.$store.getters.getMaxPrice
+                maxPrice: this.max_price
                 });
             if (this.error === "")
                 console.log("success! got psus")

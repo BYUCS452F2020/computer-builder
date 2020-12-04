@@ -1,12 +1,18 @@
 <template>
     <div>
         <p>
-            <button class="component_label" v-on:click="toggleVisible()">Coolers</button>
+            <button class="component_label" v-on:click="toggleVisible()">Cooler</button>
+            <br>
+            <br>
+            Max Price
+            <input v-model="max_price" type="number" @blur="getCoolers()" placeholder="Enter your price limit here">
             <span v-if="show">
-                <ul>
+                <ul class="item_list" >
                     <li v-for="cooler in this.$store.getters.getCoolers" :key="cooler.name">
-                        {{cooler.componentName}}: ${{cooler.price}}
-                        <button @click="addToBuild(cooler)">Add to build</button>
+                        {{cooler.componentName}}: ${{cooler.price}} <br> PR:{{cooler.performanceRating}}
+                        <br>
+                        <button @click="addToBuild(cpu)">Add to build</button>
+                        <br><br>
                     </li>
                 </ul>
             </span>
@@ -29,7 +35,8 @@ export default {
             }
             ],
             show: false,
-            currentCooler: null
+            currentCooler: null,
+            max_price: 0
         }
     },
     async created() {
@@ -53,7 +60,7 @@ export default {
                 componentType: "Cooler",
                 cpuFamily: this.$store.getters.getCpuFamily,
                 performanceRating: this.$store.getters.getPerformanceRating,
-                maxPrice: this.$store.getters.getMaxPrice
+                maxPrice: this.max_price
                 });
             if (this.error === "")
                 console.log("success! got coolers")
