@@ -113,7 +113,7 @@ public class ComponentMDAO {
         }
     }
 
-    public void deleteAll() {
+    public void deleteAll() throws DataAccessException {
         MongoDatabase database;
         try (MongoClient mongoClient = MongoClients.create()) {
             database = mongoClient.getDatabase("computer_builder");
@@ -124,6 +124,7 @@ public class ComponentMDAO {
 
         } catch (MongoClientException e) {
             e.printStackTrace();
+            throw new DataAccessException("Error removing all components");
         }
     }
 

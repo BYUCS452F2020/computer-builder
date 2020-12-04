@@ -19,13 +19,13 @@ models\Build.class
 models\request\GetSingleComponentRequest.class
 handler\LoginRequestHandler.class
 dao\ComponentMDAO.class
+service\BuildService.class
 dao\ComponentDAO.class
 handler\SingleComponentRequestHandler.class
 models\request\RegisterRequest.class
 models\result\UserBuildsResult.class
 models\result\SaveBuildResult.class
 dao\BuildDAO.class
-services\BuildService.class
 models\result\Result.class
 dao\ComponentGenerator.class
 models\Component.class

@@ -52,6 +52,9 @@ public class ComponentMDAOTest {
     @Test
     public void deleteAllTest() {
         ComponentMDAO componentMDAO = new ComponentMDAO();
-        componentMDAO.deleteAll();
+        Assertions.assertDoesNotThrow(() -> {
+            componentMDAO.deleteAll();
+            Assertions.assertEquals(new ArrayList<>().toString(), componentMDAO.findMany("CPU", 0, 0, null, 0));
+        });
     }
 }
