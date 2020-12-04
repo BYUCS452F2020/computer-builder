@@ -72,7 +72,7 @@ public class Database {
      * Creates the tables for the sqlite database.
      * @throws DataAccessException if connection or execution fails.
      */
-    //TODO: Add build table to methods
+
     public void createTables() throws DataAccessException {
         try (Statement stmt = connection.createStatement()) {
 
@@ -105,7 +105,7 @@ public class Database {
                     "build_name text not null, " +
                     "motherboard text not null, " +
                     "processor text not null, " +
-                    "cpu_cooler text not null, " +
+                    "cpu_cooler text, " +
                     "memory text not null, " +
                     "storage text not null, " +
                     "graphics_card text, " +
@@ -113,9 +113,10 @@ public class Database {
                     "pc_case text not null, " +
                     "primary key (build_id)" +
                     ")";
-                    // Todo: Was there another component that was optional besides the graphics_card?
-                    // Todo: Enable foreign key constraints in Builds table?
-                    // FOREIGN KEY(user_id) REFERENCES Users(username)
+                    // Was there another component that was optional besides the graphics_card?
+                        // Yes, cpu_cooler because some cpus come with coolers
+                    // Enable foreign key constraints in Builds table? Not really necessary
+                        // FOREIGN KEY(user_id) REFERENCES Users(username)
 
             stmt.executeUpdate(sql);
         } catch (SQLException e) {
