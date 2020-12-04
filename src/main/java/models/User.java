@@ -1,23 +1,37 @@
 package models;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.Map;
+import java.util.Objects;
 
 public class User {
 
-    private String userID;
+    @SerializedName("first_name")
     private String firstName;
+    @SerializedName("last_name")
     private String lastName;
+    @SerializedName("username")
     private String username;
     private int password;
+    @SerializedName("email")
     private String email;
     //private Map<String, Build> builds;
 
-    public User(String userID, String firstName, String lastName, String username,
+    public User(String username, String firstName, String lastName,
                 String email) {
-        this.userID = userID;
+        this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.email = email;
+    }
+
+    public User(String username, String firstName, String lastName,
+                int password, String email) {
         this.username = username;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.password = password;
         this.email = email;
     }
 
@@ -25,6 +39,9 @@ public class User {
         int hash = 1;
         for(int i = 0; i < password.length(); i++) {
             if((i % 2) == 0) {
+                hash += (i % password.charAt(i));
+            }
+            else if((i % 5) == 0) {
                 hash *= password.charAt(i);
             }
             else {
@@ -40,14 +57,6 @@ public class User {
 
     public void setPassword(String password) {
         this.password = hashPassword(password);
-    }
-
-    public String getUserID() {
-        return userID;
-    }
-
-    public void setUserID(String userID) {
-        this.userID = userID;
     }
 
     public String getFirstName() {
@@ -81,4 +90,22 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(username, user.username) &&
+                Objects.equals(firstName, user.firstName) &&
+                Objects.equals(lastName, user.lastName) &&
+                Objects.equals(email, user.email);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(username, firstName, lastName, email);
+    }
 }
+

@@ -1,0 +1,40 @@
+X570 Phantom Gaming 4S, Motherboard, AMD, 4, 143.98, AMD, 113
+Z77 FTW, Motherboard, EVGA, 9, 405.99, Intel, 113
+TUF Z490-Plus Gaming (WI-FI), Motherboard, ASUS, 6, 199.99, Intel, 113
+MPG Z390 Gaming PLUS, Motherboard, MSI, 6, 149.99, Intel, 113
+B450M PRO4, Motherboard, ASRock, 4, 82.99, AMD, 113
+B450 AORUS PRO WIFI, Motherboard, GIGABYTE, 4, 129.99, AMD, 113
+MEG Z490 ACE, Motherboard, MSI, 9, 399.99, Intel, 113
+X570 AORUS PRO WIFI, Motherboard, GIGABYTE, 8, 269.99, AMD, 113
+NM10-B-E-ION, Motherboard, Zotac, 2, 100.00, Intel, 113
+N7-Z39XT-W1, Motherboard, NZXT, 7, 249.99, Intel, 113
+Ryzen 5 3600 3rd Generation 6-Core, CPU, AMD, 6, 199.99, AMD, 65
+Ryzen 3 3200G 3rd Generation 4-Core, CPU, AMD, 4, 99.99, AMD, 65
+Ryzen 7 3700X 3rd Generation 8-Core, CPU, AMD, 7, 329.99, AMD, 65
+Ryzen 9 3900X 3rd Generation 12-core, CPU, AMD, 9, 459.99, AMD, 105
+Ryzen 5 3400G 3rd Generation 4-core, CPU, AMD, 5, 147.99, AMD, 65
+Core i7-9700K 9th Generation 8-Core, CPU, Intel, 7, 349.99, Intel, 95
+Core i5-10600K 10th Generation 6-Core, CPU, Intel, 7, 279.99, Intel, 125
+Core i3-9100 9th Generation 4-Core, CPU, Intel, 5, 124.99, Intel, 65
+Core i9-10900K 10th Generation 10-Core, CPU, Intel, 9, 529.99, Intel, 125
+Core i5-9600K 9th Generation 6-Core, CPU, Intel, 6, 199.99, Intel, 95
+Hyper 212 Edition 120mm CPU Cooling Fan, CPU Cooler, Cooler Master, 7, 37.99, null, 0
+Contac Silent 12 120mm CPU Cooling Fan, CPU Cooler, Thermaltake, 7, 29.99, null, 0
+Wraith Max, CPU Cooler, AMD, 8, 49.00, AMD, 0
+Alpine 11 Plus, CPU Cooler, ARCTIC, 5, 19.98, Intel, 0
+H115i RGB PLATINUM 280mm Liquid CPU Cooler, CPU Cooler, Corsair, 9, 169.99, null, 0
+H60 (2018) 120mm Liquid CPU Cooler, CPU Cooler, Corsair, 6, 79.99, null, 0
+IC211HTPC, CPU Cooler, Logisys, 1, 22.00, Intel, 0
+Ninja 5, CPU Cooler, Scythe, 7, 59.99, null, 0
+LOKI SD963, CPU Cooler, Xigmatek, 4, 22.95, null, 0
+MasterLiquid ML240L RGB 120mm, CPU Cooler, Cooler Master, 6, 74.99, null, 0
+4GB DDR4-2400, Memory, Crucial, 3, 29.99, null, 0
+8GB DDR4-2666, Memory, Crucial, 6, 49.99, null, 0
+16GB DDR4-3200, Memory, Crucial, 9, 79.99, null, 0
+860 EVO SATA 2.5 SSD 250GB, Storage, Samsung, 3, 49.99, null, 0
+860 EVO SATA M.2 SSD 500GB, Storage, Samsung, 6, 89.99, null, 0
+970 EVO NVMe M.2 SSD 1TB, Storage, Samsung, 9, 149.99, null, 0
+970 EVO Plus NVMe M.2 SSD 2TB, Storage, Samsung, 9, 299.99, null, 0
+MSI GTX 1660 VENTUS XS 6GB GDDR5, GPU, MSI, 3, 214.99, null, 120
+MSI RTX SUPER GAMING X TRIO GEFORCE RTX 2070 SUPER 8GB GDDR6, GPU, MSI, 6, 569.99, null, 215
+MSI GEFORCE RTX 3080 GAMING X TRIO 10GB GDDR6, GPU, MSI, 9, 759.99, null, 340
