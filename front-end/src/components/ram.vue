@@ -1,16 +1,18 @@
 <template>
     <div>
         <p>
-            <button class="component_label" v-on:click="toggleVisible()">RAMs</button>
+            <button class="component_label" v-on:click="toggleVisible()">RAM</button>
             <br>
             <br>
             Max Price
             <input v-model="max_price" type="number" @blur="getRAMs()" placeholder="Enter your price limit here">
             <span v-if="show">
-                <ul>
+                <ul class="item_list" >
                     <li v-for="ram in this.$store.getters.getRams" :key="ram.name">
-                        {{ram.componentName}}: ${{ram.price}} PR:{{ram.performanceRating}}
-                        <button @click="addToBuild(ram)">Add to build</button>
+                        {{ram.componentName}}: ${{ram.price}} <br> PR:{{ram.performanceRating}}
+                        <br>
+                        <button @click="addToBuild(cpu)">Add to build</button>
+                        <br><br>
                     </li>
                 </ul>
             </span>

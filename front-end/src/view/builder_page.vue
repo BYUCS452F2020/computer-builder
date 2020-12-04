@@ -3,7 +3,7 @@
     
       <h1>Computer Builder</h1>
       <span id="options_wrapper"> 
-        <span> 
+        <span class="options_item"> 
           <h3>What performance level are you looking for? (1-9)</h3>      
           <input v-model="performance_rating" type="number" @blur="updatePR()" placeholder="1-5">
         </span>
@@ -23,7 +23,8 @@
       <PSUs/>
       <Coolers/>
       <Cases/>
-      <input v-model="build_name" placeholder="Name your build">
+      <br> <br>
+      <input v-model="build_name" placeholder="Name your build"> <br> <br>
       <button class="component_label" v-on:click="saveBuild()">Save build</button>
       </span>
       <span id="currentBuild">
@@ -180,11 +181,25 @@ a {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
-  spac: 10px;
 }
+
+.options_item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+} 
 
 #wrapper {
   display: flex;
   justify-content: center;
+}
+
+.item_list {
+  display: flex;
+  flex-direction: column;
+}
+
+.list_item {
+
 }
 </style>

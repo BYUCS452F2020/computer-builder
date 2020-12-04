@@ -1,16 +1,18 @@
 <template>
     <div>
         <p>
-            <button class="component_label" v-on:click="toggleVisible()">CPUS</button>
+            <button class="component_label" v-on:click="toggleVisible()">CPU</button>
             <br>
             <br>
             Max Price
             <input v-model="max_price" type="number" @blur="getCPUs()" placeholder="Enter your price limit here">
             <span v-if="show">
-                <ul>
-                    <li v-for="cpu in this.$store.getters.getCpus" :key="cpu.name">
-                        {{cpu.componentName}}: ${{cpu.price}} PR:{{cpu.performanceRating}}
+                <ul class="item_list" >
+                    <li class="list_item" v-for="cpu in this.$store.getters.getCpus" :key="cpu.name">
+                        {{cpu.componentName}}: ${{cpu.price}} <br> PR:{{cpu.performanceRating}}
+                        <br>
                         <button @click="addToBuild(cpu)">Add to build</button>
+                        <br><br>
                     </li>
                 </ul>
             </span>

@@ -1,16 +1,18 @@
 <template>
     <div>
         <p>
-            <button class="component_label" v-on:click="toggleVisible()">Storages</button>
+            <button class="component_label" v-on:click="toggleVisible()">Storage</button>
             <br>
             <br>
             Max Price
             <input v-model="max_price" type="number" @blur="getStorages()" placeholder="Enter your price limit here">
             <span v-if="show">
-                <ul>
+                <ul class="item_list" >
                     <li v-for="storage in this.$store.getters.getStorages" :key="storage.name">
-                        {{storage.componentName}}: ${{storage.price}} PR:{{storage.performanceRating}}
-                        <button @click="addToBuild(storage)">Add to build</button>
+                        {{storage.componentName}}: ${{storage.price}} <br> PR:{{storage.performanceRating}}
+                        <br>
+                        <button @click="addToBuild(cpu)">Add to build</button>
+                        <br><br>
                     </li>
                 </ul>
             </span>
