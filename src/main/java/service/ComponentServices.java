@@ -1,8 +1,7 @@
 package service;
 
-import dao.ComponentDAO;
+import dao.ComponentMDAO;
 import dao.DataAccessException;
-import dao.Database;
 import models.Component;
 import models.request.ComponentRequest;
 import models.request.GetSingleComponentRequest;
@@ -14,16 +13,15 @@ import java.util.List;
 public class ComponentServices {
 
 
-    public GetSingleComponentResult getComponent(GetSingleComponentRequest request) throws DataAccessException{
-        Database database = new Database();
+    public GetSingleComponentResult getComponent(GetSingleComponentRequest request) {
         Component component;
         GetSingleComponentResult result;
         try {
-            ComponentDAO componentDAO = new ComponentDAO(database.openConnection());
-            component = componentDAO.queryNoPreconditions(request.getComponentId());
+            ComponentMDAO componentMDAO = new ComponentMDAO();
+            component = componentMDAO.findOne(request.getComponentId());
+
             result = new GetSingleComponentResult(true, component);
 
-            database.closeConnection(true);
         } catch (DataAccessException e) {
             result = new GetSingleComponentResult(false, e.getMessage());
             e.printStackTrace();
@@ -31,18 +29,18 @@ public class ComponentServices {
         return result;
     }
 
-    public ComponentResult queryComponents(ComponentRequest request) throws DataAccessException {
-        Database database = new Database();
+    public ComponentResult queryComponents(ComponentRequest request) {
+
         ComponentResult result;
         try {
-            ComponentDAO componentDAO = new ComponentDAO(database.openConnection());
-            List<Component> components = componentDAO.queryComponentsWithConditions(
+            ComponentMDAO componentMDAO = new ComponentMDAO();
+            List<Component> components = componentMDAO.findMany(
                     request.getComponentType(), request.getMaxPrice(), request.getPerformanceRating(),
-                    request.getCpuFamily());
+                    request.getCpuFamily(), request.getTdp());
+
+
             result = new ComponentResult(true, components);
-            database.closeConnection(true);
         } catch (DataAccessException e) {
-            database.closeConnection(false);
             result = new ComponentResult(false, e.getMessage());
         }
 

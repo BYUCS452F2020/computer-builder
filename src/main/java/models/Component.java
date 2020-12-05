@@ -11,7 +11,7 @@ public class Component {
     private int performanceRating;
     private double price;
     private String cpuFamily;
-    private int tpd;
+    private int tdp;
     private String imageURL;
 
     public Component(String componentID, String componentName, String componentType, String manufacturer,
@@ -23,7 +23,7 @@ public class Component {
         this.performanceRating = performanceRating;
         this.price = priceRating;
         this.cpuFamily = cpuFamily;
-        this.tpd = tpd;
+        this.tdp = tpd;
         this.imageURL = null;
     }
 
@@ -84,11 +84,11 @@ public class Component {
     }
 
     public int getTpd() {
-        return tpd;
+        return tdp;
     }
 
     public void setTpd(int tpd) {
-        this.tpd = tpd;
+        this.tdp = tpd;
     }
 
     public String getImageURL() {
@@ -106,7 +106,7 @@ public class Component {
         Component component = (Component) o;
         return performanceRating == component.performanceRating &&
                 price == component.price &&
-                tpd == component.tpd &&
+                tdp == component.tdp &&
                 Objects.equals(componentID, component.componentID) &&
                 Objects.equals(componentName, component.componentName) &&
                 Objects.equals(componentType, component.componentType) &&
@@ -116,7 +116,7 @@ public class Component {
 
     @Override
     public int hashCode() {
-        return Objects.hash(componentID, componentName, componentType, manufacturer, performanceRating, price, cpuFamily, tpd);
+        return Objects.hash(componentID, componentName, componentType, manufacturer, performanceRating, price, cpuFamily, tdp);
     }
 
     @Override
@@ -129,7 +129,7 @@ public class Component {
                 ", performanceRating=" + performanceRating +
                 ", priceRating=" + price +
                 ", cpuFamily='" + cpuFamily + '\'' +
-                ", tpd=" + tpd +
+                ", tpd=" + tdp +
                 '}';
     }
 }

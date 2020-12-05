@@ -1,12 +1,18 @@
 <template>
     <div>
         <p>
-            <button class="component_label" v-on:click="toggleVisible()">Cases</button>
+            <button class="component_label" v-on:click="toggleVisible()">Case</button>
+            <br>
+            <br>
+            Max Price
+            <input v-model="max_price" type="number" @blur="getCases()" placeholder="Enter your price limit here">
             <span v-if="show">
-                <ul>
+                <ul class="item_list" >
                     <li v-for="casE in this.$store.getters.getCases" :key="casE.name">
-                        {{casE.componentName}}: ${{casE.price}}
-                        <button @click="addToBuild(casE)">Add to build</button>
+                        {{casE.componentName}}: ${{casE.price}} <br> PR:{{casE.performanceRating}}
+                        <br>
+                        <button @click="addToBuild(cpu)">Add to build</button>
+                        <br><br>
                     </li>
                 </ul>
             </span>
@@ -20,7 +26,8 @@ export default {
     data() {
         return {
             show: false,
-            currentCase: null
+            currentCase: null,
+            max_price: 0
         }
     },
     async created() {
@@ -44,7 +51,7 @@ export default {
                 componentType: "Case",
                 cpuFamily: this.$store.getters.getCpuFamily,
                 performanceRating: this.$store.getters.getPerformanceRating,
-                maxPrice: this.$store.getters.getMaxPrice
+                maxPrice: this.max_price
                 });
             if (this.error === "")
                 console.log("success! got casEs")

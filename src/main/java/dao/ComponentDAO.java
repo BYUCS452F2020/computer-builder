@@ -69,11 +69,12 @@ public class ComponentDAO {
     }
 
     public List<Component> queryComponentsWithConditions(String componentType, int maxPrice, int performanceRating,
-                                                         String cpuFamily) throws DataAccessException {
+                                                         String cpuFamily, int maxTDP) throws DataAccessException {
         List<Component> components = new ArrayList<>();
         boolean isPriced = false;
         boolean isPerformance = false;
         boolean isCPUFamily = false;
+        boolean isPowerSupply = false;
         int index = 1;
         ResultSet rs = null;
         String sql = "SELECT * FROM Components WHERE component_type = ?";
@@ -85,12 +86,17 @@ public class ComponentDAO {
         if (performanceRating != 0) {
             System.out.println("prating");
             isPerformance = true;
-            sql += " AND performance_rating = ?";
+            sql += " AND performance_rating >= ?";
         }
         if (cpuFamily != null) {
             System.out.println("cpufam");
             isCPUFamily = true;
             sql += " AND cpu_family = ?";
+        }
+        if (componentType.equals("Power-Supply")) {
+            System.out.println("powersupply");
+            isPowerSupply = true;
+            sql += " AND tdp = ?";
         }
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(index, componentType);
@@ -105,6 +111,10 @@ public class ComponentDAO {
             if(isCPUFamily) {
                 index += 1;
                 stmt.setString(index, cpuFamily);
+            }
+            if(isPowerSupply) {
+                index += 1;
+                stmt.setInt(index, maxTDP);
             }
             rs = stmt.executeQuery();
             while(rs.next()) {

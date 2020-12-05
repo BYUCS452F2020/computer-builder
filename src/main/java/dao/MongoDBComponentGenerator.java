@@ -4,6 +4,8 @@ import models.Component;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import java.util.UUID;
 
@@ -13,8 +15,6 @@ import com.mongodb.client.MongoDatabase;
 
 public class MongoDBComponentGenerator {
     private static File inputFile;
-    private static Database database;
-    private static ComponentDAO componentDAO;
     private static String name;
     private static String type;
     private static String manufacturer;
@@ -28,11 +28,10 @@ public class MongoDBComponentGenerator {
             System.out.println("Usage: <filename>");
             return;
         }
-        database = new Database();
+        List<Component> componentList = new ArrayList<>();
         try {
             inputFile = new File(args[0]);
             Scanner scanner = new Scanner(inputFile);
-            componentDAO = new ComponentDAO(database.openConnection());
             while (scanner.hasNextLine()) {
                 String data = scanner.nextLine();
                 String[] arrOfData = data.split(", ", 7);
@@ -50,19 +49,13 @@ public class MongoDBComponentGenerator {
                 tpd = Integer.parseInt(arrOfData[6]);
                 Component component = new Component(UUID.randomUUID().toString(), name, type, manufacturer,
                         performanceRating, price, cpuFamily, tpd);
-                componentDAO.insert(component);
-                //System.out.println(component.toString());
+                componentList.add(component);
+                System.out.println(component.toString());
             }
-            database.closeConnection(true);
+            ComponentMDAO componentMDAO = new ComponentMDAO();
+            componentMDAO.insertMany(componentList);
         } catch (FileNotFoundException | DataAccessException e) {
             e.printStackTrace();
-            if(database.isOpenConnection()) {
-                try {
-                    database.closeConnection(false);
-                } catch (DataAccessException ex) {
-                    ex.printStackTrace();
-                }
-            }
         }
     }
 }
