@@ -1,13 +1,18 @@
 <template>
     <div>
         <p>
-            <button class="component_label" v-on:click="toggleVisible()">Motherboards</button>
+            <button class="component_label" v-on:click="toggleVisible()">Motherboard</button>
+            <br>
+            <br>
+            Max Price
             <input v-model="max_price" type="number" @blur="getMotherboards()" placeholder="Enter your price limit here">
             <span v-if="show">
-                <ul>
+                <ul class="item_list" >
                     <li v-for="motherboard in this.$store.getters.getMotherboards" :key="motherboard.name">
-                        {{motherboard.componentName}}: ${{motherboard.price}}
-                        <button @click="addToBuild(motherboard)">Add to build</button>
+                        {{motherboard.componentName}}: ${{motherboard.price}} <br> PR:{{motherboard.performanceRating}}
+                        <br>
+                        <button @click="addToBuild(cpu)">Add to build</button>
+                        <br><br>
                     </li>
                 </ul>
             </span>

@@ -86,7 +86,7 @@ public class ComponentDAO {
         if (performanceRating != 0) {
             System.out.println("prating");
             isPerformance = true;
-            sql += " AND performance_rating = ?";
+            sql += " AND performance_rating >= ?";
         }
         if (cpuFamily != null) {
             System.out.println("cpufam");
