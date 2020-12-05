@@ -69,7 +69,12 @@ public class ComponentMDAO {
                 queryDocument.append("cpuFamily", cpuFamily);
             }
             if(componentType.equals("Power-Supply")) {
-                queryDocument.append("tdp", maxTDP);
+                if(maxTDP == 0) {
+                    queryDocument.append("tdp", new Document().append("$lte", 100000));
+                }
+                else {
+                    queryDocument.append("tdp", new Document().append("$lte", maxTDP));
+                }
             }
 
             FindIterable<Document> componentDocList = componentCollection.find(queryDocument);

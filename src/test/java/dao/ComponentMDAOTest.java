@@ -47,6 +47,22 @@ public class ComponentMDAOTest {
 
     }
 
+    @Test
+    @DisplayName("Test finding power-supply with tdp condition")
+    public void testPowerSupplyFind() {
+        ComponentMDAO componentMDAO = new ComponentMDAO();
+
+        Assertions.assertDoesNotThrow(() -> {
+            List<Component> componentList = new ArrayList<>();
+            componentList = componentMDAO.findMany("Power-Supply", 0, 0, null, 800);
+            Assertions.assertNotEquals(new ArrayList<>().toString(), componentList.toString());
+            System.out.println(componentList.size());
+            for(Component curr : componentList) {
+                System.out.println(curr.toString());
+            }
+        });
+    }
+
 
 
     @Test
