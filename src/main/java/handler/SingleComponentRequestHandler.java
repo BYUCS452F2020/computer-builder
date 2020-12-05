@@ -52,23 +52,23 @@ public class SingleComponentRequestHandler implements HttpHandler {
                 //reqBody.close();
 
                 ComponentServices cServ = new ComponentServices();
-                try {
-                    GetSingleComponentResult compRes = cServ.getComponent(compReq);
-                    OutputStream respBody = httpE.getResponseBody();
-                    Gson ogson = new GsonBuilder().setPrettyPrinting().create();
-                    String output = ogson.toJson(compRes);
-                    OutputStreamWriter sw = new OutputStreamWriter(respBody);
-                    BufferedWriter bw = new BufferedWriter(sw);
-                    httpE.sendResponseHeaders(200,0);
-                    System.out.println(output);
-                    bw.write(output);
-                    bw.flush();
+                //try {
+                GetSingleComponentResult compRes = cServ.getComponent(compReq);
+                OutputStream respBody = httpE.getResponseBody();
+                Gson ogson = new GsonBuilder().setPrettyPrinting().create();
+                String output = ogson.toJson(compRes);
+                OutputStreamWriter sw = new OutputStreamWriter(respBody);
+                BufferedWriter bw = new BufferedWriter(sw);
+                httpE.sendResponseHeaders(200,0);
+                System.out.println(output);
+                bw.write(output);
+                bw.flush();
                     //respBody.close();
-                    httpE.getResponseBody().close();
-                } catch (DataAccessException e) {
+                httpE.getResponseBody().close();
+                /*} catch (DataAccessException e) {
                     System.out.println(e.getMessage());
                     httpE.getResponseBody().close();
-                }
+                }*/
 
             } else {
                 httpE.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);

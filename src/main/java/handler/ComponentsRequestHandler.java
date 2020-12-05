@@ -6,14 +6,12 @@ import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.google.gson.Gson;
-import dao.DataAccessException;
 import models.request.ComponentRequest;
 import models.result.ComponentResult;
 import service.*;
 
 import java.io.*;
 import java.net.HttpURLConnection;
-import java.util.List;
 
 public class ComponentsRequestHandler implements HttpHandler {
     public void handle(HttpExchange httpE) throws IOException
@@ -37,14 +35,17 @@ public class ComponentsRequestHandler implements HttpHandler {
                 for(int i =0; i < URIList.length; i++) {
                     System.out.println(i + ": " +URIList[i]);
                 }
-                /*InputStream reqBody = httpE.getRequestBody();
-                InputStreamReader isr = new InputStreamReader(reqBody);
-                BufferedReader br = new BufferedReader(isr);
-                String s = null;
+
+                //InputStream reqBody = httpE.getRequestBody();
+                //InputStreamReader isr = new InputStreamReader(reqBody);
+                //BufferedReader br = new BufferedReader(isr);
+                //String s = IOUtils.toString(reqBody, StandardCharsets.UTF_8);
+                //System.out.println(s);
 
 
-                Gson gson = new Gson();*/
-                ComponentRequest compReq = new ComponentRequest(URIList[2],URIList[3],Integer.parseInt(URIList[4]),Integer.parseInt(URIList[5]));
+
+                //Gson gson = new Gson();
+                ComponentRequest compReq = new ComponentRequest(URIList[2],URIList[3],Integer.parseInt(URIList[4]),Integer.parseInt(URIList[5]), 0);
                 if (compReq.getCpuFamily().equals("null")) {
                     compReq.setCpuFamily(null);
                 }
@@ -52,23 +53,23 @@ public class ComponentsRequestHandler implements HttpHandler {
                 //reqBody.close();
 
                 ComponentServices cServ = new ComponentServices();
-                try {
-                    ComponentResult compRes = cServ.queryComponents(compReq);
-                    OutputStream respBody = httpE.getResponseBody();
-                    Gson ogson = new GsonBuilder().setPrettyPrinting().create();
-                    String output = ogson.toJson(compRes);
-                    OutputStreamWriter sw = new OutputStreamWriter(respBody);
-                    BufferedWriter bw = new BufferedWriter(sw);
-                    httpE.sendResponseHeaders(200,0);
-                    System.out.println(output);
-                    bw.write(output);
-                    bw.flush();
+                //try {
+                ComponentResult compRes = cServ.queryComponents(compReq);
+                OutputStream respBody = httpE.getResponseBody();
+                Gson ogson = new GsonBuilder().setPrettyPrinting().create();
+                String output = ogson.toJson(compRes);
+                OutputStreamWriter sw = new OutputStreamWriter(respBody);
+                BufferedWriter bw = new BufferedWriter(sw);
+                httpE.sendResponseHeaders(200,0);
+                System.out.println(output);
+                bw.write(output);
+                bw.flush();
                     //respBody.close();
-                    httpE.getResponseBody().close();
-                } catch (DataAccessException e) {
+                httpE.getResponseBody().close();
+                /*} catch (DataAccessException e) {
                     System.out.println(e.getMessage());
                     httpE.getResponseBody().close();
-                }
+                }*/
 
                 System.out.println("done getting " + compReq.getComponentType());
             } else {
