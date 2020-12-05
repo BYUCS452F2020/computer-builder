@@ -6,7 +6,6 @@ import java.util.List;
 /**
  * Contains all the necessary fields for a login response. All fields are required.
  */
-//TODO Create Build Model
 
 public class UserBuildsResult extends Result{
 

@@ -19,16 +19,6 @@ public class Build
 	private String powerSupply;
 	private String pcCase;
 
-	// If we want to change/add the Component objects instead of just the componentIds
-//	private Component motherboard;
-//	private Component processor;
-//	private Component cpuCooler;
-//	private Component memory;
-//	private Component storage;
-//	private Component graphicsCard;
-//	private Component powerSupply;
-//	private Component pcCase;
-
 
 	public Build(String buildId, String userId, String buildName, String motherboard, String processor, String cpuCooler,
 				 String memory, String storage, String graphicsCard, String powerSupply, String pcCase)
